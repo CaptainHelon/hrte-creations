@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HRTE Creations – Laser & 3D Print Studio</title>
+   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HRTE Creations – Laser & 3D Print Studio</title>
+
+  <!-- FAVICON — shows in browser tab -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23c8853a'/><text y='.9em' x='50%' text-anchor='middle' font-size='58' font-family='serif' font-weight='900' fill='black'>HR</text></svg>" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════ -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="logo-icon">HR</div>
+    <div class="logo-text">HRTE<span>Creations</span></div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#custom">Custom Order</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <button class="cart-btn" onclick="openCart()">
+      🛒 Cart
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <a class="whatsapp-btn" href="https://wa.me/94714754871" target="_blank">
+      💬 WhatsApp
+    </a>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════
+     HERO — RIGHT-SIDE SLIDESHOW
+     Media sits on the RIGHT, text stays on the dark LEFT.
+     Left edge of each slide fades beautifully into black.
+
+     HOW TO ADD YOUR MEDIA:
+     • Image slide: set style="background-image: url('images/yourphoto.jpg');"
+     • Video slide: add a <video> tag inside the slide div (see slide-2 example)
+══════════════════════════════════════════════ -->
+<section class="hero" id="home">
+
+  <!-- ── RIGHT-SIDE MEDIA SLIDES ── -->
+  <div class="hero-slides">
+
+    <!-- Slide 1 — Image (replace URL with your photo) -->
+    <div class="hero-slide slide-1 active"
+         style="background-image: url('images/tig2.jpeg');">
+    </div>
+
+    <!-- Slide 2 — Video example (replace src with your video file) -->
+    <div class="hero-slide slide-2">
+      <video autoplay muted loop playsinline
+        style ="width:100%;height:100%;object-fit:cover;display:block;">
+        <source src="images/tt3d.mp4" type="video/mp4">
+        <!-- Fallback image if video fails -->
+        <img src="images/hero2.jpg" style="width:100%;height:100%;object-fit:cover;" />
+      </video>
+    </div>
+
+    <!-- Slide 3 — Image -->
+     <div class="hero-slide slide-4">
+      <video autoplay muted loop playsinline
+        style="width:100%;height:100%;object-fit:cover;display:block;">
+        <source src="images/laser1.mp4" type="video/mp4">
+        <img src="images/hero4.jpg" style="width:100%;height:100%;object-fit:cover;" />
+      </video>
+    </div>
+
+    <!-- Slide 4 — Video example -->
+ 
+      <div class="hero-slide slide-3"
+         style="background-image: url('images/tig1.jpeg');">
+    </div>
+  </div>
+
+  <!-- ── BEAUTIFUL LEFT FADE OVERLAY ──
+       Creates a smooth black-to-transparent gradient
+       that blends the media into the dark left text area -->
+  <div class="hero-fade-left"></div>
+
+  <!-- ── BOTTOM VIGNETTE (subtle depth) ── -->
+  <div class="hero-fade-bottom"></div>
+
+  <!-- ── TEXT CONTENT (LEFT SIDE) ── -->
+  <div class="hero-content">
+    <div class="hero-tag">🔥 Sri Lanka's Custom Maker Studio</div>
+    <h1>Crafted<br/>With <em>Laser<br/>Precision</em></h1>
+    <p>Custom laser engraving, CNC cutting & 3D printing — from personalised gifts to business signage. Every piece, uniquely yours.</p>
+    <div class="hero-actions">
+      <a href="#shop"   class="btn-primary">🛍️ Shop Products</a>
+      <a href="#custom" class="btn-outline">✏️ Place Custom Order</a>
+    </div>
+  </div>
+
+  <!-- ── SLIDE DOTS ── -->
+  <div class="hero-dots">
+    <div class="hero-dot active" onclick="goToSlide(0)"></div>
+    <div class="hero-dot"        onclick="goToSlide(1)"></div>
+    <div class="hero-dot"        onclick="goToSlide(2)"></div>
+    <div class="hero-dot"        onclick="goToSlide(3)"></div>
+  </div>
+
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     STATS BAR
+══════════════════════════════════════════════ -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Orders Completed</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Custom Made</div></div>
+  <div class="stat"><div class="stat-num">3</div>   <div class="stat-label">Services Offered</div></div>
+  <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label">Customer Rating</div></div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     ABOUT / CATEGORIES
+══════════════════════════════════════════════ -->
+<section class="categories" id="about">
+  <div class="section-header reveal">
+    <div class="section-tag">What We Do</div>
+    <h2 class="section-title">Our <em>Services</em></h2>
+    <p class="section-sub">Three machines, infinite possibilities — all under one roof in Sri Lanka.</p>
+  </div>
+
+  <div class="cat-grid reveal">
+    <div class="cat-card" onclick="scrollToShop('laser')">
+      <div class="cat-bg">🔥</div>
+      <div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-icon">🔥</div>
+        <div class="cat-name">Laser Engraving</div>
+        <div class="cat-desc">Photos, logos, and custom designs burned into wood, acrylic & more — with stunning detail and precision.</div>
+        <div class="cat-count">Wooden Photos · Key Tags · Signs</div>
+      </div>
+    </div>
+
+    <div class="cat-card" onclick="scrollToShop('3d')">
+      <div class="cat-bg">🖨️</div>
+      <div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-icon">🖨️</div>
+        <div class="cat-name">3D Printing</div>
+        <div class="cat-desc">Custom 3D printed products from PLA — phone covers, frames, brackets, prototypes and more.</div>
+        <div class="cat-count">Phone Covers · Frames · Custom Parts</div>
+      </div>
+    </div>
+
+    <div class="cat-card" onclick="scrollToShop('custom')">
+      <div class="cat-bg">✨</div>
+      <div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-icon">✨</div>
+        <div class="cat-name">Custom Orders</div>
+        <div class="cat-desc">Got a unique idea? Upload your design and we'll bring it to life, exactly as you imagined.</div>
+        <div class="cat-count">Business Items · Gifts · Signage</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SHOP — PRODUCT GRID
+══════════════════════════════════════════════ -->
+<section class="shop" id="shop">
+  <div class="section-header reveal">
+    <div class="section-tag">Ready to Order</div>
+    <h2 class="section-title">Our <em>Products</em></h2>
+    <p class="section-sub">Browse our ready-made and custom-made products. Add to cart or place a custom order.</p>
+  </div>
+
+  <div class="shop-filters reveal">
+    <button class="filter-btn active" onclick="filterProducts('all',     this)">All Products</button>
+    <button class="filter-btn"        onclick="filterProducts('laser',   this)">🔥 Laser Engraved</button>
+    <button class="filter-btn"        onclick="filterProducts('3d',      this)">🖨️ 3D Printed</button>
+    <button class="filter-btn"        onclick="filterProducts('gift',    this)">🎁 Gifts</button>
+    <button class="filter-btn"        onclick="filterProducts('business',this)">🏢 Business</button>
+    <button class="filter-btn"        onclick="filterProducts('custom',  this)">✨ Custom</button>
+  </div>
+
+  <!-- Products injected here by script.js → renderProducts() -->
+  <div class="products-grid reveal" id="productsGrid"></div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     CUSTOM ORDER SECTION
+══════════════════════════════════════════════ -->
+<section class="custom-order" id="custom">
+  <div class="custom-layout">
+
+    <!-- Left — how it works -->
+    <div class="custom-info reveal">
+      <div class="section-tag">Place Your Vision</div>
+      <h2 class="section-title">Custom <em>Orders</em></h2>
+      <p class="section-sub">Have something specific in mind? Fill in the details, upload your design or photo, and we'll craft it for you.</p>
+
+      <div class="custom-steps">
+        <div class="custom-step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <h4>Describe Your Product</h4>
+            <p>Tell us what you want — size, material, quantity, and any special notes.</p>
+          </div>
+        </div>
+        <div class="custom-step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <h4>Upload Your Design / Photo</h4>
+            <p>Send us your logo, image, or reference file. We accept JPG, PNG, PDF, SVG.</p>
+          </div>
+        </div>
+        <div class="custom-step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <h4>We Quote & Confirm</h4>
+            <p>We'll WhatsApp you a price and production timeline within 24 hours.</p>
+          </div>
+        </div>
+        <div class="custom-step">
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <h4>Pay & Receive</h4>
+            <p>Pay via bank transfer or cash on delivery. We deliver island-wide.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right — order form -->
+    <div class="reveal">
+      <form class="order-form" id="customOrderForm" onsubmit="submitCustomOrder(event)">
+        <div class="form-title">Request a Custom Order</div>
+        <div class="form-sub">We'll get back to you on WhatsApp within 24 hours.</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Your Name *</label>
+            <input type="text" class="form-input" placeholder="John Silva" required id="cf-name" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">WhatsApp Number *</label>
+            <input type="tel" class="form-input" placeholder="0714754871" required id="cf-phone" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" placeholder="you@email.com" id="cf-email" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Service Type *</label>
+            <select class="form-select" required id="cf-service">
+              <option value="">Select service...</option>
+              <option value="laser-engraving">🔥 Laser Engraving</option>
+              <option value="laser-cutting">✂️ Laser Cutting</option>
+              <option value="3d-printing">🖨️ 3D Printing</option>
+              <option value="mixed">✨ Mixed / Not Sure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Quantity *</label>
+            <input type="number" class="form-input" placeholder="e.g. 5" min="1" required id="cf-qty" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Material / Size Preference</label>
+          <select class="form-select" id="cf-material">
+            <option value="">Select material...</option>
+            <option value="wood">🪵 Wood</option>
+            <option value="acrylic">🔮 Acrylic</option>
+            <option value="pla-white">🖨️ PLA – White</option>
+            <option value="pla-black">🖨️ PLA – Black</option>
+            <option value="pla-gray">🖨️ PLA – Gray</option>
+            <option value="other">Other (describe below)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Describe Your Order *</label>
+          <textarea class="form-textarea" placeholder="Tell us exactly what you need — design details, dimensions, purpose, deadline, etc." required id="cf-desc"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Upload Design / Photo</label>
+          <div class="file-upload" onclick="document.getElementById('cf-file').click()">
+            <input type="file" id="cf-file" accept=".jpg,.jpeg,.png,.pdf,.svg,.dxf" onchange="showFileName(this)" />
+            <span>📎</span>
+            <p id="file-name-display">Click to upload JPG, PNG, PDF, SVG, DXF</p>
+          </div>
+        </div>
+
+        <button type="submit" class="form-submit">✉️ Send Custom Order Request</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     GALLERY
+     Replace emoji inside .gallery-item with your real photos:
+     <img src="images/your-photo.jpg" style="width:100%;height:100%;object-fit:cover;" />
+══════════════════════════════════════════════ -->
+<section class="gallery" id="gallery">
+  <div class="section-header reveal">
+    <div class="section-tag">Our Work</div>
+    <h2 class="section-title">From <em>Our Workshop</em></h2>
+    <p class="section-sub">Real products, real craftsmanship — see what we've built for our customers.</p>
+  </div>
+
+  <div class="gallery-grid reveal">
+    <div class="gallery-item">🪵<div class="gallery-item-label">Wooden Photo Engraving</div></div>
+    <div class="gallery-item">🏷️<div class="gallery-item-label">Custom Key Tags</div></div>
+    <div class="gallery-item">📋<div class="gallery-item-label">Business Table Signs</div></div>
+    <div class="gallery-item">📱<div class="gallery-item-label">3D Phone Cover</div></div>
+    <div class="gallery-item">🖼️<div class="gallery-item-label">Photo Frame</div></div>
+    <div class="gallery-item">🏭<div class="gallery-item-label">Business Signage</div></div>
+    <div class="gallery-item">💝<div class="gallery-item-label">Valentine's Gift Set</div></div>
+    <div class="gallery-item">🖨️<div class="gallery-item-label">3D Printed Parts</div></div>
+    <div class="gallery-item">✨<div class="gallery-item-label">Custom Engravings</div></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════════════════ -->
+<section class="testimonials" id="contact">
+  <div class="section-header reveal">
+    <div class="section-tag">Customer Love</div>
+    <h2 class="section-title">What They <em>Say</em></h2>
+  </div>
+
+  <div class="testimonials-grid reveal">
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Ordered custom table numbers for our restaurant and they were absolutely stunning. The laser engraving quality was far beyond what we expected."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">K</div>
+        <div>
+          <div class="author-name">Kasun Perera</div>
+          <div class="author-role">Restaurant Owner, Colombo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Got a wooden photo engraving as a Valentine's gift for my partner. She cried tears of joy. The detail was incredible — you could see every expression."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">A</div>
+        <div>
+          <div class="author-name">Ashan Fernando</div>
+          <div class="author-role">Customer, Kandy</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Had a custom 3D phone cover made and it fits perfectly. Super fast delivery and very responsive on WhatsApp. Highly recommend HRTE Creations!"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">N</div>
+        <div>
+          <div class="author-name">Nimasha Silva</div>
+          <div class="author-role">Customer, Galle</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">
+        <div class="logo-icon">HR</div>
+        <div class="logo-text">HRTE<span>Creations</span></div>
+      </a>
+      <p>Sri Lanka's premier custom laser engraving and 3D printing studio. We turn your ideas into handcrafted, precision-made realities.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#shop">Laser Engraving</a></li>
+        <li><a href="#shop">CNC Cutting</a></li>
+        <li><a href="#shop">3D Printing</a></li>
+        <li><a href="#custom">Custom Orders</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="#shop">Wooden Photos</a></li>
+        <li><a href="#shop">Key Tags</a></li>
+        <li><a href="#shop">Phone Covers</a></li>
+        <li><a href="#shop">Business Signs</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="https://wa.me/94714754871">WhatsApp: 0714754871</a></li>
+        <li><a href="#gallery">Portfolio</a></li>
+        <li><a href="#custom">Place Order</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 HRTE Creations. All rights reserved.</p>
+    <p>Made with ❤️ in Sri Lanka</p>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════════
+     CART SIDEBAR
+══════════════════════════════════════════════ -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>🛒 Your Cart</h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty" id="cartEmpty">
+      <div class="cart-empty-icon">🛒</div>
+      <p>Your cart is empty.<br/>Add some amazing products!</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total">
+      <span>Total</span>
+      <strong id="cartTotal">Rs 0</strong>
+    </div>
+    <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout →</button>
+    <div class="payment-methods">
+      <span class="payment-badge">💳 Card</span>
+      <span class="payment-badge">🏦 Bank</span>
+      <span class="payment-badge">💵 COD</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     CHECKOUT MODAL
+══════════════════════════════════════════════ -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal">
+    <button class="modal-close-btn" onclick="closeCheckout()">✕</button>
+    <h3>Checkout</h3>
+    <p class="modal-sub">Fill in your details to complete the order.</p>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Full Name *</label>
+        <input type="text" class="form-input" placeholder="Your name" id="co-name" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone *</label>
+        <input type="tel" class="form-input" placeholder="07XXXXXXXX" id="co-phone" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-input" placeholder="you@email.com" id="co-email" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Delivery Address *</label>
+      <textarea class="form-textarea" placeholder="Full address including city" style="min-height:70px;" id="co-address"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Payment Method *</label>
+      <div class="payment-options">
+        <label class="payment-option selected" onclick="selectPayment(this)">
+          <div class="payment-option-icon">🏦</div>
+          <div class="payment-option-text">
+            <h4>Bank Transfer</h4>
+            <p>Transfer to our account & send slip via WhatsApp</p>
+          </div>
+          <input type="radio" name="payment" value="bank" checked />
+        </label>
+
+        <label class="payment-option" onclick="selectPayment(this)">
+          <div class="payment-option-icon">💵</div>
+          <div class="payment-option-text">
+            <h4>Cash on Delivery</h4>
+            <p>Pay when you receive — island-wide delivery</p>
+          </div>
+          <input type="radio" name="payment" value="cod" />
+        </label>
+
+        <label class="payment-option" onclick="selectPayment(this)">
+          <div class="payment-option-icon">💬</div>
+          <div class="payment-option-text">
+            <h4>WhatsApp Order</h4>
+            <p>We'll confirm price & payment details on WhatsApp</p>
+          </div>
+          <input type="radio" name="payment" value="whatsapp" />
+        </label>
+      </div>
+    </div>
+
+    <button class="form-submit" onclick="placeOrder()">✅ Place Order</button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     TOAST NOTIFICATION
+══════════════════════════════════════════════ -->
+<div class="toast" id="toast">✅ Added to cart!</div>
+
+
+<!-- ══════════════════════════════════════════════
+     FLOATING WHATSAPP BUTTON
+══════════════════════════════════════════════ -->
+<a class="float-wa" href="https://wa.me/94714754871" target="_blank" title="Chat on WhatsApp">💬</a>
+
+
+<!-- JavaScript loaded last for best performance -->
+<script src="script.js"></script>
+
+</body>
+</html>
