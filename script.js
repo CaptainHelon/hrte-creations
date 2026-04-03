@@ -8,18 +8,18 @@
    icon: '<img src="images/product1.jpg" style="width:100%;height:100%;object-fit:cover;" />'
 ════════════════════════════════ */
 const PRODUCTS = [
-  { id:1,  name:'Wooden Photo Engraving',    category:'laser gift',     price:700,  badge:'Popular',    icon:'<img src="images/13.jpeg" style="width:100%;height:100%;object-fit:cover;" />', desc:'Your photo engraved on 100×100mm wood. Varnished & finished.',                             isCustom:false },
+  { id:1,  name:'Wooden Photo Engraving',    category:'laser gift',     price:700,  badge:'Popular',    icon:'🖼️', desc:'Your photo engraved on 100×100mm wood. Varnished & finished.',                             isCustom:false },
   { id:2,  name:'Custom Key Tag',            category:'laser gift',     price:100,  badge:'Bestseller', icon:'🏷️', desc:'Heart-shaped or square wooden key tags with your design/name.',                           isCustom:false },
-  { id:3,  name:'Restaurant Table Numbers',  category:'laser business', price:350,  badge:null,         icon:'<img src="images/11.jpeg" style="width:100%;height:100%;object-fit:cover;" />', desc:'Custom numbered table signs laser-engraved on wood. Per piece.', isCustom:false },
+  { id:3,  name:'Restaurant Table Numbers',  category:'laser business', price:350,  badge:null,         icon:'📋', desc:'Custom numbered table signs laser-engraved on wood. Per piece.',                          isCustom:false },
   { id:4,  name:'Business Logo Sign',        category:'laser business', price:1200, badge:null,         icon:'🪵', desc:'Your logo or business name engraved on a polished wooden plaque.',                        isCustom:false },
-  { id:5,  name:'Custom 3D Phone Cover',     category:'3d',             price:2000, badge:'Custom',     icon:'<img src="images/phone.jpeg" style="width:100%;height:100%;object-fit:cover;" />', desc:'3D printed to fit your exact phone model. iPhone & Samsung available.',                   isCustom:true  },
+  { id:5,  name:'Custom 3D Phone Cover',     category:'3d',             price:2000, badge:'Custom',     icon:'📱', desc:'3D printed to fit your exact phone model. iPhone & Samsung available.',                   isCustom:true  },
   { id:6,  name:'3D Photo Frame',            category:'3d',             price:800,  badge:null,         icon:'🖼️', desc:'Sleek 3D printed frames — black or white PLA. Custom sizes available.',                  isCustom:false },
-  { id:7,  name:'Couple Photo Engraving',    category:'laser gift',     price:1200, badge:'Gift',       icon:'<img src="images/couple1.jpeg" style="width:100%;height:100%;object-fit:cover;" />', desc:'Two photos side by side engraved on wood. Perfect anniversary gift.',                     isCustom:false },
-  { id:8,  name:'Custom Laser Cutting',      category:'laser custom',   price:500,  badge:'Custom',     icon:'<img src="images/las.jpeg" style="width:100%;height:100%;object-fit:cover;" />', desc:'Custom shapes cut from wood or acrylic. Upload your vector file.',                       isCustom:true  },
-  { id:9,  name:'3D Printed Prototype',      category:'3d custom',      price:1500, badge:'Custom',     icon:'<img src="images/custom2.jpeg" style="width:100%;height:100%;object-fit:cover;" />', desc:'Have a design in Fusion 360 or STL? We print it for you.',                               isCustom:true  },
+  { id:7,  name:'Couple Photo Engraving',    category:'laser gift',     price:1200, badge:'Gift',       icon:'💑', desc:'Two photos side by side engraved on wood. Perfect anniversary gift.',                     isCustom:false },
+  { id:8,  name:'Custom Laser Cutting',      category:'laser custom',   price:500,  badge:'Custom',     icon:'✂️', desc:'Custom shapes cut from wood or acrylic. Upload your vector file.',                       isCustom:true  },
+  { id:9,  name:'3D Printed Prototype',      category:'3d custom',      price:1500, badge:'Custom',     icon:'🔩', desc:'Have a design in Fusion 360 or STL? We print it for you.',                               isCustom:true  },
   { id:10, name:'Keychain Gift Set (3pcs)',   category:'laser gift',     price:250,  badge:'Value',      icon:'🎁', desc:'Set of 3 customized wooden keychains — perfect for gifting.',                             isCustom:false },
   { id:11, name:'Acrylic Name Plate',        category:'laser business', price:900,  badge:null,         icon:'🔮', desc:'Laser-cut acrylic desk name plate with your name and designation.',                      isCustom:false },
-  { id:12, name:'Full Custom Order',         category:'custom',         price:null, badge:'Custom',     icon:'<img src="images/cus.jpeg" style="width:100%;height:100%;object-fit:cover;" />', desc:'Describe your idea — we price it based on complexity & material.',                        isCustom:true  },
+  { id:12, name:'Full Custom Order',         category:'custom',         price:null, badge:'Custom',     icon:'✨', desc:'Describe your idea — we price it based on complexity & material.',                        isCustom:true  },
 ];
 
 /* ════════════════════════════════
@@ -53,7 +53,10 @@ function renderProducts(filter) {
             ${p.price ? '<span>/ piece</span>' : ''}
           </div>
           ${p.isCustom
-            ? `<button class="add-to-cart custom-order" onclick="scrollToSection('custom')">✏️ Order</button>`
+            ? `<div class="product-btn-row">
+                ${(p.category.includes('3d')) ? `<a href="3d-calculator.html" class="calc-mini-btn" title="Get instant price estimate">🖩 Quote</a>` : ''}
+                <button class="add-to-cart custom-order" onclick="scrollToSection('custom')">✏️ Order</button>
+               </div>`
             : `<button class="add-to-cart" onclick="addToCart(${p.id})">+ Add</button>`
           }
         </div>
