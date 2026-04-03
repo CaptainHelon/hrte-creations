@@ -425,7 +425,13 @@ function handleFile(file) {
 }
 
 // ── FAST STL PARSER ─────────────────────────────────
-// Uses typed arrays directly — no string conversion, very fast
+// Binary STL triangle layout (50 bytes each):
+//   bytes 0-11:  normal vector (3 × float32)
+//   bytes 12-23: vertex 1     (3 × float32)
+//   bytes 24-35: vertex 2     (3 × float32)
+//   bytes 36-47: vertex 3     (3 × float32)
+//   bytes 48-49: attribute    (uint16) ← this is why Float32Array stride fails!
+// Total file: 80-byte header + 4-byte count + N × 50 bytes
 function parseSTLFast(buffer) {
   const view = new DataView(buffer);
   const numTris = view.getUint32(80, true);
@@ -434,30 +440,39 @@ function parseSTLFast(buffer) {
   let triangles = 0;
 
   if (buffer.byteLength === expectedBinary && numTris > 0) {
-    // Binary STL — use Float32Array for speed
+    // Binary STL — read each triangle using correct byte offsets via DataView
     triangles = numTris;
-    const floats = new Float32Array(buffer, 84);
-    // Each triangle = 12 floats (3 normal + 3×3 vertex) + 1 uint16
-    // We read vertices at offsets 3,4,5 / 6,7,8 / 9,10,11 of each 12-float block
-    const stride = 12; // floats per triangle (we ignore the 2-byte attribute at end)
     for (let i = 0; i < numTris; i++) {
-      const o = i * stride + 3; // skip 3 normal floats
-      const v1x = floats[o],   v1y = floats[o+1], v1z = floats[o+2];
-      const v2x = floats[o+3], v2y = floats[o+4], v2z = floats[o+5];
-      const v3x = floats[o+6], v3y = floats[o+7], v3z = floats[o+8];
+      // base = start of this triangle's data (after 80-byte header + 4-byte count)
+      // +12 to skip the normal vector (3 floats × 4 bytes)
+      const base = 84 + i * 50 + 12;
+      const v1x = view.getFloat32(base,    true);
+      const v1y = view.getFloat32(base+4,  true);
+      const v1z = view.getFloat32(base+8,  true);
+      const v2x = view.getFloat32(base+12, true);
+      const v2y = view.getFloat32(base+16, true);
+      const v2z = view.getFloat32(base+20, true);
+      const v3x = view.getFloat32(base+24, true);
+      const v3y = view.getFloat32(base+28, true);
+      const v3z = view.getFloat32(base+32, true);
       volume += (v1x*(v2y*v3z - v2z*v3y)
                - v1y*(v2x*v3z - v2z*v3x)
                + v1z*(v2x*v3y - v2y*v3x)) / 6;
     }
   } else {
-    // ASCII STL — fast regex scan
+    // ASCII STL — text-based format
     const text = new TextDecoder().decode(buffer);
     const matches = text.match(/vertex\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)/g) || [];
     triangles = Math.floor(matches.length / 3);
     for (let i = 0; i < triangles; i++) {
-      const parse = s => { const m = s.match(/vertex\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)/); return m ? [+m[1],+m[2],+m[3]] : [0,0,0]; };
-      const [v1,v2,v3] = [parse(matches[i*3]),parse(matches[i*3+1]),parse(matches[i*3+2])];
-      volume += (v1[0]*(v2[1]*v3[2]-v2[2]*v3[1]) - v1[1]*(v2[0]*v3[2]-v2[2]*v3[0]) + v1[2]*(v2[0]*v3[1]-v2[1]*v3[0])) / 6;
+      const parse = s => {
+        const m = s.match(/vertex\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)/);
+        return m ? [+m[1], +m[2], +m[3]] : [0, 0, 0];
+      };
+      const [v1,v2,v3] = [parse(matches[i*3]), parse(matches[i*3+1]), parse(matches[i*3+2])];
+      volume += (v1[0]*(v2[1]*v3[2]-v2[2]*v3[1])
+               - v1[1]*(v2[0]*v3[2]-v2[2]*v3[0])
+               + v1[2]*(v2[0]*v3[1]-v2[1]*v3[0])) / 6;
     }
   }
 
@@ -512,15 +527,16 @@ function render3D(buffer) {
   const positions = [];
 
   if (buffer.byteLength === expectedBinary && numTris > 0) {
-    // Limit triangles for rendering (max 200k for performance)
-    const maxTris = Math.min(numTris, 200000);
+    // Limit triangles for rendering performance (max 200k displayed)
     const step = numTris > 200000 ? Math.ceil(numTris / 200000) : 1;
-    const floats = new Float32Array(buffer, 84);
     for (let i = 0; i < numTris; i += step) {
-      const o = i * 12 + 3;
-      for (let v = 0; v < 3; v++) {
-        positions.push(floats[o + v*3], floats[o + v*3+1], floats[o + v*3+2]);
-      }
+      // Same correct byte offset as the parser: 84 header + i*50 + 12 skip normal
+      const base = 84 + i * 50 + 12;
+      positions.push(
+        view.getFloat32(base,    true), view.getFloat32(base+4,  true), view.getFloat32(base+8,  true),
+        view.getFloat32(base+12, true), view.getFloat32(base+16, true), view.getFloat32(base+20, true),
+        view.getFloat32(base+24, true), view.getFloat32(base+28, true), view.getFloat32(base+32, true)
+      );
     }
   }
 
