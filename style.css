@@ -1101,3 +1101,17 @@ footer {
     max-width: 100%;
   }
 }
+.cat-calc-btn {
+  display: inline-block;
+  margin-top: 12px;
+  background: var(--amber);
+  color: #000;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: background .2s;
+}
+.cat-calc-btn:hover { background: var(--amber-lt); }
