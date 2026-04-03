@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Print Calculator — HRTE Creations</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg:#0a0a0a; --surface:#131313; --surface2:#1c1c1c; --border:#2a2a2a;
+      --amber:#c8853a; --amber-lt:#e8a05a; --cream:#f5efe6; --text:#e8e0d5;
+      --muted:#7a7060; --green:#27ae60; --radius:12px;
+    }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; }
+    ::-webkit-scrollbar{width:6px} ::-webkit-scrollbar-track{background:var(--bg)} ::-webkit-scrollbar-thumb{background:var(--amber);border-radius:3px}
+
+    /* NAV */
+    nav { position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(200,133,58,0.15); }
+    .nav-logo { display:flex;align-items:center;gap:12px;text-decoration:none; }
+    .logo-icon { width:38px;height:38px;background:var(--amber);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:18px;color:#000; }
+    .logo-text { font-family:'Playfair Display',serif;font-size:16px;color:var(--cream);line-height:1.1; }
+    .logo-text span { display:block;font-size:9px;letter-spacing:3px;color:var(--amber);font-family:'DM Sans';font-weight:500;text-transform:uppercase; }
+    .back-btn { display:flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s; }
+    .back-btn:hover { color:var(--amber); }
+
+    /* HERO */
+    .page-hero { padding:50px 48px 36px;border-bottom:1px solid var(--border); }
+    .hero-tag { display:inline-flex;align-items:center;gap:8px;background:rgba(200,133,58,0.1);border:1px solid rgba(200,133,58,0.25);color:var(--amber);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:50px;margin-bottom:14px; }
+    .page-hero h1 { font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,52px);font-weight:900;color:var(--cream);line-height:1.0;margin-bottom:12px; }
+    .page-hero h1 em { font-style:italic;color:var(--amber); }
+    .page-hero p { color:var(--muted);font-size:15px;font-weight:300;max-width:500px;line-height:1.7; }
+
+    /* LAYOUT */
+    .calc-layout { display:grid;grid-template-columns:1fr 400px;gap:24px;padding:28px 48px 60px;align-items:start; }
+
+    /* LEFT */
+    .left-panel { display:flex;flex-direction:column;gap:20px; }
+
+    /* UPLOAD */
+    .upload-zone { border:2px dashed var(--border);border-radius:20px;padding:52px 32px;text-align:center;cursor:pointer;transition:all .3s;position:relative;background:var(--surface); }
+    .upload-zone:hover,.upload-zone.drag-over { border-color:var(--amber);background:rgba(200,133,58,0.04); }
+    .upload-zone input { position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%; }
+    .upload-icon { font-size:52px;margin-bottom:16px;display:block; }
+    .upload-zone h3 { font-family:'Playfair Display',serif;font-size:22px;color:var(--cream);margin-bottom:8px; }
+    .upload-zone p { font-size:13px;color:var(--muted);line-height:1.6; }
+    .upload-hint { display:inline-block;margin-top:14px;background:rgba(200,133,58,0.1);color:var(--amber);font-size:12px;font-weight:600;padding:6px 16px;border-radius:20px;border:1px solid rgba(200,133,58,0.25); }
+
+    /* VIEWER */
+    .viewer-box { display:none;background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden; }
+    .viewer-box.show { display:block; }
+    .viewer-top { padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between; }
+    .viewer-top h4 { font-size:14px;font-weight:600;color:var(--cream); }
+    .change-btn { background:none;border:1px solid var(--border);color:var(--muted);padding:5px 14px;border-radius:20px;font-size:12px;cursor:pointer;font-family:'DM Sans';transition:all .2s; }
+    .change-btn:hover { border-color:var(--amber);color:var(--amber); }
+    #stl-canvas { width:100%;height:320px;display:block;background:linear-gradient(135deg,#111,#1a1a1a); }
+    .viewer-stats { display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border); }
+    .v-stat { padding:14px;text-align:center;border-right:1px solid var(--border); }
+    .v-stat:last-child { border-right:none; }
+    .v-stat-val { font-family:'Bebas Neue';font-size:20px;color:var(--amber);letter-spacing:1px; }
+    .v-stat-lbl { font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px; }
+
+    /* SETTINGS */
+    .settings-card { background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:26px; }
+    .settings-title { font-family:'Playfair Display',serif;font-size:17px;color:var(--cream);margin-bottom:20px;font-weight:700; }
+    .setting-row { margin-bottom:18px; }
+    .setting-label { font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:block; }
+
+    /* Material */
+    .mat-grid { display:grid;grid-template-columns:1fr 1fr;gap:8px; }
+    .mat-btn { background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .2s;text-align:left; }
+    .mat-btn:hover { border-color:rgba(200,133,58,0.4); }
+    .mat-btn.active { border-color:var(--amber);background:rgba(200,133,58,0.06); }
+    .mat-name { font-size:14px;font-weight:600;color:var(--cream); }
+    .mat-desc { font-size:11px;color:var(--muted);margin-top:2px; }
+    .mat-price { font-family:'Bebas Neue';font-size:15px;color:var(--amber);letter-spacing:1px;margin-top:4px; }
+
+    /* Quality */
+    .qual-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:8px; }
+    .qual-btn { background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 6px;cursor:pointer;transition:all .2s;text-align:center; }
+    .qual-btn:hover { border-color:rgba(200,133,58,0.4); }
+    .qual-btn.active { border-color:var(--amber);background:rgba(200,133,58,0.06); }
+    .qual-name { font-size:13px;font-weight:600;color:var(--cream); }
+    .qual-detail { font-size:10px;color:var(--muted);margin-top:2px; }
+
+    /* Colors */
+    .color-row { display:flex;gap:8px;flex-wrap:wrap; }
+    .clr { width:32px;height:32px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700; }
+    .clr:hover { transform:scale(1.1); }
+    .clr.active { border-color:var(--amber); }
+
+    /* Infill */
+    .infill-row { display:flex;align-items:center;gap:12px; }
+    .infill-row input[type=range] { flex:1;-webkit-appearance:none;height:4px;background:var(--border);border-radius:2px;outline:none; }
+    .infill-row input[type=range]::-webkit-slider-thumb { -webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--amber);cursor:pointer; }
+    .infill-val { font-family:'Bebas Neue';font-size:18px;color:var(--amber);min-width:40px;text-align:right;letter-spacing:1px; }
+
+    /* Qty */
+    .qty-row { display:flex;align-items:center;gap:12px; }
+    .qty-btn { width:36px;height:36px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s; }
+    .qty-btn:hover { border-color:var(--amber);color:var(--amber); }
+    .qty-num { font-family:'Bebas Neue';font-size:24px;color:var(--cream);min-width:30px;text-align:center;letter-spacing:1px; }
+
+    /* RIGHT PANEL — PRICE */
+    .price-panel { position:sticky;top:80px;display:flex;flex-direction:column;gap:16px; }
+
+    .price-card { background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden; }
+    .price-card-top { background:rgba(200,133,58,0.08);border-bottom:1px solid var(--border);padding:20px 24px; }
+    .price-card-top h3 { font-family:'Playfair Display',serif;font-size:16px;color:var(--cream);margin-bottom:4px; }
+    .price-card-top p { font-size:12px;color:var(--muted); }
+
+    .price-body { padding:20px 24px; }
+    .price-line { display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04); }
+    .price-line:last-child { border-bottom:none; }
+    .price-line-label { font-size:13px;color:var(--muted); }
+    .price-line-val { font-size:13px;color:var(--text);font-weight:500; }
+
+    .price-total { padding:20px 24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end; }
+    .price-total-label { font-size:12px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase; }
+    .price-total-amount { font-family:'Bebas Neue';font-size:42px;color:var(--amber);letter-spacing:2px;line-height:1; }
+    .price-total-sub { font-size:11px;color:var(--muted);margin-top:3px; }
+
+    /* No file state */
+    .price-empty { padding:32px 24px;text-align:center; }
+    .price-empty-icon { font-size:40px;opacity:.3;margin-bottom:12px; }
+    .price-empty p { font-size:13px;color:var(--muted);line-height:1.6; }
+
+    /* ORDER FORM */
+    .order-card { background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:24px; }
+    .order-title { font-family:'Playfair Display',serif;font-size:17px;color:var(--cream);margin-bottom:16px;font-weight:700; }
+    .form-group { margin-bottom:12px; }
+    .form-label { font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:block; }
+    .form-input, .form-textarea {
+      width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--text);
+      padding:10px 14px;border-radius:10px;font-family:'DM Sans';font-size:13px;outline:none;transition:border-color .2s;
+    }
+    .form-input:focus, .form-textarea:focus { border-color:var(--amber); }
+    .form-textarea { resize:vertical;min-height:70px; }
+
+    .order-btn {
+      width:100%;background:var(--amber);color:#000;border:none;padding:16px;border-radius:50px;
+      font-family:'DM Sans';font-size:15px;font-weight:700;cursor:pointer;transition:all .25s;
+      display:flex;align-items:center;justify-content:center;gap:10px;margin-top:4px;letter-spacing:.3px;
+    }
+    .order-btn:hover { background:var(--amber-lt);transform:translateY(-2px);box-shadow:0 10px 30px rgba(200,133,58,.3); }
+    .order-btn:disabled { opacity:.4;cursor:not-allowed;transform:none;box-shadow:none; }
+
+    .wa-btn {
+      width:100%;background:#25D366;color:#fff;border:none;padding:13px;border-radius:50px;
+      font-family:'DM Sans';font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;
+      display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;
+    }
+    .wa-btn:hover { opacity:.85; }
+
+    /* PROCESSING */
+    .processing { display:none;flex-direction:column;align-items:center;gap:12px;padding:32px;text-align:center; }
+    .processing.show { display:flex; }
+    .spinner { width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--amber);border-radius:50%;animation:spin .8s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .processing p { font-size:13px;color:var(--muted); }
+
+    /* TOAST */
+    .toast { position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--surface);border:1px solid var(--amber);color:var(--cream);padding:12px 24px;border-radius:50px;font-size:14px;z-index:3000;transition:transform .4s;white-space:nowrap; }
+    .toast.show { transform:translateX(-50%) translateY(0); }
+
+    /* RESPONSIVE */
+    @media(max-width:900px) {
+      nav { padding:14px 20px; }
+      .page-hero { padding:36px 20px 24px; }
+      .calc-layout { grid-template-columns:1fr;padding:20px; }
+      .price-panel { position:static; }
+      .viewer-stats { grid-template-columns:repeat(2,1fr); }
+      .v-stat:nth-child(2) { border-right:none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">HR</div>
+    <div class="logo-text">HRTE<span>Creations</span></div>
+  </a>
+  <a href="index.html" class="back-btn">← Back to Store</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-tag">🖨️ Instant Pricing</div>
+  <h1>3D Print <em>Price<br/>Calculator</em></h1>
+  <p>Upload your STL file — we'll instantly calculate the weight, print time and price. No guessing, no waiting.</p>
+</div>
+
+<!-- CALCULATOR -->
+<div class="calc-layout">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+
+    <!-- Upload Zone -->
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="stlFile" accept=".stl" />
+      <span class="upload-icon">📦</span>
+      <h3>Upload your STL file</h3>
+      <p>Drag & drop your 3D model here, or click to browse.<br/>We support binary and ASCII STL files up to 50MB.</p>
+      <span class="upload-hint">.STL files only — max 50MB</span>
+    </div>
+
+    <!-- Processing -->
+    <div class="processing" id="processing">
+      <div class="spinner"></div>
+      <p>Analysing your 3D model...</p>
+    </div>
+
+    <!-- 3D Viewer -->
+    <div class="viewer-box" id="viewerBox">
+      <div class="viewer-top">
+        <h4 id="fileName">model.stl</h4>
+        <button class="change-btn" onclick="resetFile()">Change file</button>
+      </div>
+      <canvas id="stl-canvas"></canvas>
+      <div class="viewer-stats">
+        <div class="v-stat"><div class="v-stat-val" id="stat-vol">—</div><div class="v-stat-lbl">Volume cm³</div></div>
+        <div class="v-stat"><div class="v-stat-val" id="stat-weight">—</div><div class="v-stat-lbl">Weight (g)</div></div>
+        <div class="v-stat"><div class="v-stat-val" id="stat-time">—</div><div class="v-stat-lbl">Print Time</div></div>
+        <div class="v-stat"><div class="v-stat-val" id="stat-tris">—</div><div class="v-stat-lbl">Triangles</div></div>
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="settings-card">
+      <div class="settings-title">Print Settings</div>
+
+      <!-- Material -->
+      <div class="setting-row">
+        <span class="setting-label">Material</span>
+        <div class="mat-grid">
+          <div class="mat-btn active" onclick="setMaterial('PLA',this)">
+            <div class="mat-name">PLA</div>
+            <div class="mat-desc">Biodegradable · Easy print</div>
+            <div class="mat-price">Rs 6 / gram</div>
+          </div>
+          <div class="mat-btn" onclick="setMaterial('ABS',this)">
+            <div class="mat-name">ABS</div>
+            <div class="mat-desc">Strong · Heat resistant</div>
+            <div class="mat-price">Rs 5 / gram</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quality -->
+      <div class="setting-row">
+        <span class="setting-label">Print Quality</span>
+        <div class="qual-grid">
+          <div class="qual-btn" onclick="setQuality('draft',this)">
+            <div class="qual-name">Draft</div>
+            <div class="qual-detail">0.3mm · Fast</div>
+          </div>
+          <div class="qual-btn active" onclick="setQuality('standard',this)">
+            <div class="qual-name">Standard</div>
+            <div class="qual-detail">0.2mm · Balanced</div>
+          </div>
+          <div class="qual-btn" onclick="setQuality('fine',this)">
+            <div class="qual-name">Fine</div>
+            <div class="qual-detail">0.1mm · Detailed</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Color -->
+      <div class="setting-row">
+        <span class="setting-label">Color</span>
+        <div class="color-row" id="colorRow">
+          <div class="clr active" style="background:#f0f0f0;" data-color="White" onclick="setColor('White',this)"><span style="color:#999">✓</span></div>
+          <div class="clr" style="background:#1a1a1a;border:1.5px solid #444;" data-color="Black" onclick="setColor('Black',this)"></div>
+          <div class="clr" style="background:#888;" data-color="Gray" onclick="setColor('Gray',this)"></div>
+          <div class="clr" style="background:#e74c3c;" data-color="Red" onclick="setColor('Red',this)"></div>
+          <div class="clr" style="background:#3498db;" data-color="Blue" onclick="setColor('Blue',this)"></div>
+          <div class="clr" style="background:#2ecc71;" data-color="Green" onclick="setColor('Green',this)"></div>
+          <div class="clr" style="background:#f39c12;" data-color="Orange" onclick="setColor('Orange',this)"></div>
+          <div class="clr" style="background:#9b59b6;" data-color="Purple" onclick="setColor('Purple',this)"></div>
+          <div class="clr" style="background:#ffd700;" data-color="Yellow" onclick="setColor('Yellow',this)"></div>
+        </div>
+      </div>
+
+      <!-- Infill -->
+      <div class="setting-row">
+        <span class="setting-label">Infill Density</span>
+        <div class="infill-row">
+          <input type="range" id="infillSlider" min="10" max="100" value="20" step="5" oninput="updateInfill(this.value)" />
+          <span class="infill-val" id="infillVal">20%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:4px;">
+          <span style="font-size:11px;color:var(--muted)">Light (10%)</span>
+          <span style="font-size:11px;color:var(--muted)">Solid (100%)</span>
+        </div>
+      </div>
+
+      <!-- Quantity -->
+      <div class="setting-row" style="margin-bottom:0">
+        <span class="setting-label">Quantity</span>
+        <div class="qty-row">
+          <button class="qty-btn" onclick="changeQty(-1)">−</button>
+          <span class="qty-num" id="qtyNum">1</span>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+          <span style="font-size:13px;color:var(--muted);margin-left:8px">pieces</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="price-panel">
+
+    <!-- Price Card -->
+    <div class="price-card">
+      <div class="price-card-top">
+        <h3>Price Estimate</h3>
+        <p>Based on your file and settings</p>
+      </div>
+
+      <!-- Empty state -->
+      <div class="price-empty" id="priceEmpty">
+        <div class="price-empty-icon">📤</div>
+        <p>Upload your STL file above to<br/>get an instant price estimate.</p>
+      </div>
+
+      <!-- Price breakdown -->
+      <div id="priceBreakdown" style="display:none;">
+        <div class="price-body">
+          <div class="price-line">
+            <span class="price-line-label">Material</span>
+            <span class="price-line-val" id="pb-material">PLA</span>
+          </div>
+          <div class="price-line">
+            <span class="price-line-label">Weight</span>
+            <span class="price-line-val" id="pb-weight">— g</span>
+          </div>
+          <div class="price-line">
+            <span class="price-line-label">Material cost</span>
+            <span class="price-line-val" id="pb-matcost">Rs —</span>
+          </div>
+          <div class="price-line">
+            <span class="price-line-label">Print time</span>
+            <span class="price-line-val" id="pb-time">— hrs</span>
+          </div>
+          <div class="price-line">
+            <span class="price-line-label">Labour cost</span>
+            <span class="price-line-val" id="pb-labour">Rs —</span>
+          </div>
+          <div class="price-line">
+            <span class="price-line-label">Quality</span>
+            <span class="price-line-val" id="pb-quality">Standard</span>
+          </div>
+          <div class="price-line">
+            <span class="price-line-label">Infill</span>
+            <span class="price-line-val" id="pb-infill">20%</span>
+          </div>
+          <div class="price-line">
+            <span class="price-line-label">Colour</span>
+            <span class="price-line-val" id="pb-color">White</span>
+          </div>
+          <div class="price-line">
+            <span class="price-line-label">Quantity</span>
+            <span class="price-line-val" id="pb-qty">× 1</span>
+          </div>
+        </div>
+        <div class="price-total">
+          <div>
+            <div class="price-total-label">Total Price</div>
+            <div class="price-total-sub" id="pb-persub">per piece</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="price-total-amount" id="pb-total">Rs 0</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:4px;" id="pb-totalqty"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Form -->
+    <div class="order-card">
+      <div class="order-title">Place Your Order</div>
+      <div class="form-group">
+        <label class="form-label">Your Name *</label>
+        <input type="text" class="form-input" id="o-name" placeholder="John Silva" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">WhatsApp Number *</label>
+        <input type="tel" class="form-input" id="o-phone" placeholder="0714754871" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Special Notes</label>
+        <textarea class="form-textarea" id="o-notes" placeholder="Any special requirements, dimensions, finishing etc..."></textarea>
+      </div>
+      <button class="order-btn" id="orderBtn" onclick="placeOrder()">
+        🖨️ Place 3D Print Order
+      </button>
+      <button class="wa-btn" onclick="orderViaWhatsApp()">
+        💬 Order via WhatsApp
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast">✅ Done!</div>
+
+<!-- THREE.JS for 3D preview -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+// ── STATE ──────────────────────────────────────────
+let state = {
+  file: null,
+  volume: 0,        // cm³
+  triangles: 0,
+  material: 'PLA',
+  quality: 'standard',
+  color: 'White',
+  infill: 20,
+  qty: 1,
+  weight: 0,
+  printTime: 0,
+  totalPrice: 0,
+};
+
+// ── PRICING CONFIG ──────────────────────────────────
+const MATERIALS = {
+  PLA: { pricePerGram: 6, density: 1.24, name: 'PLA' },
+  ABS: { pricePerGram: 5, density: 1.05, name: 'ABS' },
+};
+const QUALITY = {
+  draft:    { multiplier: 0.85, speedCm3PerHr: 25, name: 'Draft' },
+  standard: { multiplier: 1.00, speedCm3PerHr: 18, name: 'Standard' },
+  fine:     { multiplier: 1.30, speedCm3PerHr: 10, name: 'Fine' },
+};
+const LABOUR_PER_HOUR = 400; // Rs per hour of print time
+
+// ── DRAG & DROP ─────────────────────────────────────
+const uploadZone = document.getElementById('uploadZone');
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file && file.name.toLowerCase().endsWith('.stl')) handleFile(file);
+  else showToast('⚠️ Please upload an STL file!');
+});
+document.getElementById('stlFile').addEventListener('change', e => {
+  if (e.target.files[0]) handleFile(e.target.files[0]);
+});
+
+// ── HANDLE FILE ─────────────────────────────────────
+function handleFile(file) {
+  if (file.size > 50 * 1024 * 1024) { showToast('⚠️ File too large! Max 50MB.'); return; }
+  state.file = file;
+  document.getElementById('fileName').textContent = file.name;
+  uploadZone.style.display = 'none';
+  document.getElementById('processing').classList.add('show');
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    const buffer = e.target.result;
+    parseSTL(buffer);
+    render3D(buffer, file.name);
+    document.getElementById('processing').classList.remove('show');
+    document.getElementById('viewerBox').classList.add('show');
+    document.getElementById('priceEmpty').style.display = 'none';
+    document.getElementById('priceBreakdown').style.display = 'block';
+    updatePrice();
+  };
+  reader.readAsArrayBuffer(buffer => {}, file);
+
+  // Use correct FileReader approach
+  const fr = new FileReader();
+  fr.onload = e => {
+    const buf = e.target.result;
+    const info = parseSTL(buf);
+    state.volume = info.volume;
+    state.triangles = info.triangles;
+    render3D(buf);
+    document.getElementById('processing').classList.remove('show');
+    document.getElementById('viewerBox').classList.add('show');
+    document.getElementById('priceEmpty').style.display = 'none';
+    document.getElementById('priceBreakdown').style.display = 'block';
+    document.getElementById('fileName').textContent = file.name;
+    updateStats();
+    updatePrice();
+  };
+  fr.readAsArrayBuffer(file);
+}
+
+// ── PARSE STL ────────────────────────────────────────
+function parseSTL(buffer) {
+  const view = new DataView(buffer);
+  let triangles = 0;
+  let volume = 0;
+
+  // Check if binary STL
+  const numTriangles = view.getUint32(80, true);
+  const expectedSize = 84 + numTriangles * 50;
+
+  if (buffer.byteLength === expectedSize && numTriangles > 0) {
+    // Binary STL
+    triangles = numTriangles;
+    for (let i = 0; i < numTriangles; i++) {
+      const offset = 84 + i * 50;
+      const v1x = view.getFloat32(offset + 12, true);
+      const v1y = view.getFloat32(offset + 16, true);
+      const v1z = view.getFloat32(offset + 20, true);
+      const v2x = view.getFloat32(offset + 24, true);
+      const v2y = view.getFloat32(offset + 28, true);
+      const v2z = view.getFloat32(offset + 32, true);
+      const v3x = view.getFloat32(offset + 36, true);
+      const v3y = view.getFloat32(offset + 40, true);
+      const v3z = view.getFloat32(offset + 44, true);
+      // Signed volume of tetrahedron
+      volume += (v1x*(v2y*v3z - v2z*v3y) - v1y*(v2x*v3z - v2z*v3x) + v1z*(v2x*v3y - v2y*v3x)) / 6;
+    }
+  } else {
+    // ASCII STL
+    const text = new TextDecoder().decode(buffer);
+    const verts = text.match(/vertex\s+([\d.e+-]+)\s+([\d.e+-]+)\s+([\d.e+-]+)/gi) || [];
+    triangles = Math.floor(verts.length / 3);
+    for (let i = 0; i < triangles; i++) {
+      const parse = v => {
+        const m = v.match(/vertex\s+([\d.e+-]+)\s+([\d.e+-]+)\s+([\d.e+-]+)/i);
+        return m ? [parseFloat(m[1]), parseFloat(m[2]), parseFloat(m[3])] : [0,0,0];
+      };
+      const [v1, v2, v3] = [parse(verts[i*3]), parse(verts[i*3+1]), parse(verts[i*3+2])];
+      volume += (v1[0]*(v2[1]*v3[2]-v2[2]*v3[1]) - v1[1]*(v2[0]*v3[2]-v2[2]*v3[0]) + v1[2]*(v2[0]*v3[1]-v2[1]*v3[0])) / 6;
+    }
+  }
+
+  // Convert mm³ to cm³
+  const volumeCm3 = Math.abs(volume) / 1000;
+  return { volume: volumeCm3, triangles };
+}
+
+// ── 3D RENDER ────────────────────────────────────────
+let threeRenderer, threeScene, threeCamera, threeMesh, animId;
+
+function render3D(buffer) {
+  const canvas = document.getElementById('stl-canvas');
+  if (animId) cancelAnimationFrame(animId);
+
+  // Setup Three.js
+  threeRenderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  threeRenderer.setSize(canvas.offsetWidth || 600, 320);
+  threeRenderer.setPixelRatio(window.devicePixelRatio);
+  threeRenderer.setClearColor(0x111111, 1);
+
+  threeScene = new THREE.Scene();
+  threeCamera = new THREE.PerspectiveCamera(45, (canvas.offsetWidth || 600) / 320, 0.1, 10000);
+
+  // Parse geometry
+  const geo = new THREE.BufferGeometry();
+  const view = new DataView(buffer);
+  const numTris = view.getUint32(80, true);
+  const expectedSize = 84 + numTris * 50;
+  const positions = [];
+
+  if (buffer.byteLength === expectedSize && numTris > 0) {
+    for (let i = 0; i < numTris; i++) {
+      const o = 84 + i * 50;
+      for (let v = 0; v < 3; v++) {
+        positions.push(
+          view.getFloat32(o + 12 + v*12, true),
+          view.getFloat32(o + 16 + v*12, true),
+          view.getFloat32(o + 20 + v*12, true)
+        );
+      }
+    }
+  }
+
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geo.computeVertexNormals();
+  geo.center();
+
+  const mat = new THREE.MeshPhongMaterial({ color: 0xc8853a, specular: 0x444444, shininess: 60 });
+  threeMesh = new THREE.Mesh(geo, mat);
+  threeScene.add(threeMesh);
+
+  // Scale to fit
+  const box = new THREE.Box3().setFromObject(threeMesh);
+  const size = box.getSize(new THREE.Vector3());
+  const maxDim = Math.max(size.x, size.y, size.z);
+  const scale = 100 / maxDim;
+  threeMesh.scale.set(scale, scale, scale);
+
+  threeCamera.position.set(0, 0, 220);
+
+  // Lights
+  threeScene.add(new THREE.AmbientLight(0xffffff, 0.5));
+  const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  dirLight.position.set(1, 2, 3);
+  threeScene.add(dirLight);
+  const dirLight2 = new THREE.DirectionalLight(0xffa040, 0.4);
+  dirLight2.position.set(-2, -1, -1);
+  threeScene.add(dirLight2);
+
+  // Animate
+  let rot = 0;
+  function animate() {
+    animId = requestAnimationFrame(animate);
+    rot += 0.008;
+    threeMesh.rotation.y = rot;
+    threeMesh.rotation.x = Math.sin(rot * 0.3) * 0.2;
+    threeRenderer.render(threeScene, threeCamera);
+  }
+  animate();
+}
+
+// ── UPDATE STATS ─────────────────────────────────────
+function updateStats() {
+  const mat = MATERIALS[state.material];
+  const q = QUALITY[state.quality];
+  const infillFactor = state.infill / 100;
+  const shellFactor = 0.25; // shell is always solid
+  const effectiveDensity = shellFactor + (1 - shellFactor) * infillFactor;
+  const weight = state.volume * mat.density * effectiveDensity;
+  const printTime = state.volume / q.speedCm3PerHr;
+
+  state.weight = weight;
+  state.printTime = printTime;
+
+  document.getElementById('stat-vol').textContent = state.volume.toFixed(1);
+  document.getElementById('stat-weight').textContent = weight.toFixed(1);
+  document.getElementById('stat-tris').textContent = state.triangles > 1000 ? (state.triangles/1000).toFixed(1)+'K' : state.triangles;
+
+  const hrs = Math.floor(printTime);
+  const mins = Math.round((printTime - hrs) * 60);
+  document.getElementById('stat-time').textContent = hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`;
+}
+
+// ── UPDATE PRICE ─────────────────────────────────────
+function updatePrice() {
+  if (!state.file) return;
+  updateStats();
+
+  const mat = MATERIALS[state.material];
+  const q = QUALITY[state.quality];
+
+  const matCost = state.weight * mat.pricePerGram * q.multiplier;
+  const labourCost = state.printTime * LABOUR_PER_HOUR;
+  const unitPrice = Math.ceil((matCost + labourCost) * 1.2); // 20% margin
+  const totalPrice = unitPrice * state.qty;
+  state.totalPrice = totalPrice;
+
+  // Update breakdown
+  document.getElementById('pb-material').textContent = mat.name;
+  document.getElementById('pb-weight').textContent = state.weight.toFixed(1) + ' g';
+  document.getElementById('pb-matcost').textContent = 'Rs ' + Math.round(matCost);
+  const hrs = Math.floor(state.printTime);
+  const mins = Math.round((state.printTime - hrs) * 60);
+  document.getElementById('pb-time').textContent = hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`;
+  document.getElementById('pb-labour').textContent = 'Rs ' + Math.round(labourCost);
+  document.getElementById('pb-quality').textContent = q.name;
+  document.getElementById('pb-infill').textContent = state.infill + '%';
+  document.getElementById('pb-color').textContent = state.color;
+  document.getElementById('pb-qty').textContent = '× ' + state.qty;
+  document.getElementById('pb-total').textContent = 'Rs ' + totalPrice.toLocaleString();
+  document.getElementById('pb-persub').textContent = state.qty > 1 ? `Rs ${unitPrice.toLocaleString()} per piece` : 'per piece';
+  document.getElementById('pb-totalqty').textContent = state.qty > 1 ? `Total: Rs ${totalPrice.toLocaleString()}` : '';
+}
+
+// ── SETTINGS HANDLERS ────────────────────────────────
+function setMaterial(mat, el) {
+  state.material = mat;
+  document.querySelectorAll('.mat-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  updatePrice();
+}
+
+function setQuality(q, el) {
+  state.quality = q;
+  document.querySelectorAll('.qual-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  updatePrice();
+}
+
+function setColor(color, el) {
+  state.color = color;
+  document.querySelectorAll('.clr').forEach(c => {
+    c.classList.remove('active');
+    c.innerHTML = '';
+  });
+  el.classList.add('active');
+  const isDark = ['Black','Navy'].includes(color);
+  el.innerHTML = `<span style="color:${isDark?'#aaa':'#555'}">✓</span>`;
+  updatePrice();
+}
+
+function updateInfill(val) {
+  state.infill = parseInt(val);
+  document.getElementById('infillVal').textContent = val + '%';
+  updatePrice();
+}
+
+function changeQty(delta) {
+  state.qty = Math.max(1, Math.min(99, state.qty + delta));
+  document.getElementById('qtyNum').textContent = state.qty;
+  updatePrice();
+}
+
+function resetFile() {
+  state.file = null;
+  if (animId) cancelAnimationFrame(animId);
+  document.getElementById('uploadZone').style.display = 'block';
+  document.getElementById('viewerBox').classList.remove('show');
+  document.getElementById('priceEmpty').style.display = 'block';
+  document.getElementById('priceBreakdown').style.display = 'none';
+  document.getElementById('stlFile').value = '';
+}
+
+// ── ORDER ────────────────────────────────────────────
+async function placeOrder() {
+  const name = document.getElementById('o-name').value.trim();
+  const phone = document.getElementById('o-phone').value.trim();
+  if (!state.file) { showToast('⚠️ Please upload your STL file first!'); return; }
+  if (!name || !phone) { showToast('⚠️ Please enter your name and phone!'); return; }
+
+  const orderData = {
+    type: 'custom_order',
+    name, phone,
+    service: '3d-printing',
+    material: state.material,
+    qty: state.qty,
+    description: `3D Print Order — File: ${state.file.name} | Material: ${state.material} | Quality: ${state.quality} | Infill: ${state.infill}% | Color: ${state.color} | Weight: ${state.weight.toFixed(1)}g | Print Time: ${state.printTime.toFixed(1)}h | Price: Rs ${state.totalPrice} | Notes: ${document.getElementById('o-notes').value}`,
+    date: new Date().toISOString(),
+  };
+
+  const btn = document.getElementById('orderBtn');
+  btn.disabled = true;
+  btn.textContent = 'Placing order...';
+
+  try {
+    const res = await fetch('http://localhost:3000/api/custom-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData),
+    });
+    if (res.ok) {
+      showToast('🎉 Order placed! We\'ll WhatsApp you soon.');
+      btn.textContent = '✅ Order Placed!';
+    } else throw new Error();
+  } catch {
+    orderViaWhatsApp();
+  } finally {
+    setTimeout(() => { btn.disabled = false; btn.innerHTML = '🖨️ Place 3D Print Order'; }, 3000);
+  }
+}
+
+function orderViaWhatsApp() {
+  const name = document.getElementById('o-name').value || 'Customer';
+  const notes = document.getElementById('o-notes').value;
+  const msg = encodeURIComponent(
+    `Hi HRTE Creations! I want to place a 3D print order.\n\n` +
+    `Name: ${name}\n` +
+    `File: ${state.file ? state.file.name : 'Not uploaded yet'}\n` +
+    `Material: ${state.material}\n` +
+    `Quality: ${QUALITY[state.quality].name}\n` +
+    `Color: ${state.color}\n` +
+    `Infill: ${state.infill}%\n` +
+    `Quantity: ${state.qty}\n` +
+    `Estimated Weight: ${state.weight.toFixed(1)}g\n` +
+    `Estimated Price: Rs ${state.totalPrice.toLocaleString()}\n` +
+    (notes ? `Notes: ${notes}` : '')
+  );
+  window.open(`https://wa.me/94714754871?text=${msg}`, '_blank');
+}
+
+// ── TOAST ────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
