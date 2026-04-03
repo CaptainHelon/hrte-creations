@@ -1101,6 +1101,10 @@ footer {
     max-width: 100%;
   }
 }
+
+/* ════════════════════════════════
+   3D CALCULATOR BUTTON — category card
+════════════════════════════════ */
 .cat-calc-btn {
   display: inline-block;
   margin-top: 12px;
@@ -1115,3 +1119,35 @@ footer {
   transition: background .2s;
 }
 .cat-calc-btn:hover { background: var(--amber-lt); }
+
+/* ════════════════════════════════
+   PRODUCT CARD — quote + order button row
+   Shown on 3D custom & full custom products
+════════════════════════════════ */
+.product-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Small calculator/quote button — sits LEFT of the Order button */
+.calc-mini-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: 1.5px solid var(--amber);
+  color: var(--amber);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 12px;
+  border-radius: 50px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.calc-mini-btn:hover {
+  background: var(--amber);
+  color: #000;
+}
