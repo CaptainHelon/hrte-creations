@@ -10,13 +10,12 @@
     :root {
       --bg:#0a0a0a; --surface:#131313; --surface2:#1c1c1c; --border:#2a2a2a;
       --amber:#c8853a; --amber-lt:#e8a05a; --cream:#f5efe6; --text:#e8e0d5;
-      --muted:#7a7060; --green:#27ae60; --radius:12px;
+      --muted:#7a7060; --radius:12px;
     }
     html { scroll-behavior:smooth; }
     body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; }
     ::-webkit-scrollbar{width:6px} ::-webkit-scrollbar-track{background:var(--bg)} ::-webkit-scrollbar-thumb{background:var(--amber);border-radius:3px}
 
-    /* NAV */
     nav { position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(200,133,58,0.15); }
     .nav-logo { display:flex;align-items:center;gap:12px;text-decoration:none; }
     .logo-icon { width:38px;height:38px;background:var(--amber);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:18px;color:#000; }
@@ -25,17 +24,13 @@
     .back-btn { display:flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s; }
     .back-btn:hover { color:var(--amber); }
 
-    /* HERO */
     .page-hero { padding:50px 48px 36px;border-bottom:1px solid var(--border); }
     .hero-tag { display:inline-flex;align-items:center;gap:8px;background:rgba(200,133,58,0.1);border:1px solid rgba(200,133,58,0.25);color:var(--amber);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:50px;margin-bottom:14px; }
     .page-hero h1 { font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,52px);font-weight:900;color:var(--cream);line-height:1.0;margin-bottom:12px; }
     .page-hero h1 em { font-style:italic;color:var(--amber); }
     .page-hero p { color:var(--muted);font-size:15px;font-weight:300;max-width:500px;line-height:1.7; }
 
-    /* LAYOUT */
     .calc-layout { display:grid;grid-template-columns:1fr 400px;gap:24px;padding:28px 48px 60px;align-items:start; }
-
-    /* LEFT */
     .left-panel { display:flex;flex-direction:column;gap:20px; }
 
     /* UPLOAD */
@@ -47,6 +42,14 @@
     .upload-zone p { font-size:13px;color:var(--muted);line-height:1.6; }
     .upload-hint { display:inline-block;margin-top:14px;background:rgba(200,133,58,0.1);color:var(--amber);font-size:12px;font-weight:600;padding:6px 16px;border-radius:20px;border:1px solid rgba(200,133,58,0.25); }
 
+    /* PROCESSING */
+    .processing { display:none;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px 32px;text-align:center; }
+    .processing.show { display:block; }
+    .progress-wrap { background:var(--border);border-radius:4px;height:6px;margin:20px 0 10px;overflow:hidden; }
+    .progress-bar { height:100%;background:var(--amber);border-radius:4px;width:0%;transition:width .3s ease; }
+    .progress-label { font-size:13px;color:var(--muted); }
+    .progress-step { font-size:12px;color:var(--amber);margin-top:6px;font-weight:600; }
+
     /* VIEWER */
     .viewer-box { display:none;background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden; }
     .viewer-box.show { display:block; }
@@ -54,7 +57,7 @@
     .viewer-top h4 { font-size:14px;font-weight:600;color:var(--cream); }
     .change-btn { background:none;border:1px solid var(--border);color:var(--muted);padding:5px 14px;border-radius:20px;font-size:12px;cursor:pointer;font-family:'DM Sans';transition:all .2s; }
     .change-btn:hover { border-color:var(--amber);color:var(--amber); }
-    #stl-canvas { width:100%;height:320px;display:block;background:linear-gradient(135deg,#111,#1a1a1a); }
+    #stl-canvas { width:100%;height:300px;display:block;background:#111; }
     .viewer-stats { display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border); }
     .v-stat { padding:14px;text-align:center;border-right:1px solid var(--border); }
     .v-stat:last-child { border-right:none; }
@@ -67,7 +70,6 @@
     .setting-row { margin-bottom:18px; }
     .setting-label { font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:block; }
 
-    /* Material */
     .mat-grid { display:grid;grid-template-columns:1fr 1fr;gap:8px; }
     .mat-btn { background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .2s;text-align:left; }
     .mat-btn:hover { border-color:rgba(200,133,58,0.4); }
@@ -76,7 +78,6 @@
     .mat-desc { font-size:11px;color:var(--muted);margin-top:2px; }
     .mat-price { font-family:'Bebas Neue';font-size:15px;color:var(--amber);letter-spacing:1px;margin-top:4px; }
 
-    /* Quality */
     .qual-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:8px; }
     .qual-btn { background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 6px;cursor:pointer;transition:all .2s;text-align:center; }
     .qual-btn:hover { border-color:rgba(200,133,58,0.4); }
@@ -84,87 +85,56 @@
     .qual-name { font-size:13px;font-weight:600;color:var(--cream); }
     .qual-detail { font-size:10px;color:var(--muted);margin-top:2px; }
 
-    /* Colors */
     .color-row { display:flex;gap:8px;flex-wrap:wrap; }
     .clr { width:32px;height:32px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700; }
     .clr:hover { transform:scale(1.1); }
     .clr.active { border-color:var(--amber); }
 
-    /* Infill */
     .infill-row { display:flex;align-items:center;gap:12px; }
     .infill-row input[type=range] { flex:1;-webkit-appearance:none;height:4px;background:var(--border);border-radius:2px;outline:none; }
     .infill-row input[type=range]::-webkit-slider-thumb { -webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--amber);cursor:pointer; }
     .infill-val { font-family:'Bebas Neue';font-size:18px;color:var(--amber);min-width:40px;text-align:right;letter-spacing:1px; }
 
-    /* Qty */
     .qty-row { display:flex;align-items:center;gap:12px; }
     .qty-btn { width:36px;height:36px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s; }
     .qty-btn:hover { border-color:var(--amber);color:var(--amber); }
     .qty-num { font-family:'Bebas Neue';font-size:24px;color:var(--cream);min-width:30px;text-align:center;letter-spacing:1px; }
 
-    /* RIGHT PANEL — PRICE */
+    /* PRICE PANEL */
     .price-panel { position:sticky;top:80px;display:flex;flex-direction:column;gap:16px; }
-
     .price-card { background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden; }
     .price-card-top { background:rgba(200,133,58,0.08);border-bottom:1px solid var(--border);padding:20px 24px; }
     .price-card-top h3 { font-family:'Playfair Display',serif;font-size:16px;color:var(--cream);margin-bottom:4px; }
     .price-card-top p { font-size:12px;color:var(--muted); }
-
+    .price-empty { padding:32px 24px;text-align:center; }
+    .price-empty-icon { font-size:40px;opacity:.3;margin-bottom:12px; }
+    .price-empty p { font-size:13px;color:var(--muted);line-height:1.6; }
     .price-body { padding:20px 24px; }
     .price-line { display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04); }
     .price-line:last-child { border-bottom:none; }
     .price-line-label { font-size:13px;color:var(--muted); }
     .price-line-val { font-size:13px;color:var(--text);font-weight:500; }
-
     .price-total { padding:20px 24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end; }
     .price-total-label { font-size:12px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase; }
     .price-total-amount { font-family:'Bebas Neue';font-size:42px;color:var(--amber);letter-spacing:2px;line-height:1; }
-    .price-total-sub { font-size:11px;color:var(--muted);margin-top:3px; }
 
-    /* No file state */
-    .price-empty { padding:32px 24px;text-align:center; }
-    .price-empty-icon { font-size:40px;opacity:.3;margin-bottom:12px; }
-    .price-empty p { font-size:13px;color:var(--muted);line-height:1.6; }
-
-    /* ORDER FORM */
     .order-card { background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:24px; }
     .order-title { font-family:'Playfair Display',serif;font-size:17px;color:var(--cream);margin-bottom:16px;font-weight:700; }
     .form-group { margin-bottom:12px; }
     .form-label { font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:block; }
-    .form-input, .form-textarea {
-      width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--text);
-      padding:10px 14px;border-radius:10px;font-family:'DM Sans';font-size:13px;outline:none;transition:border-color .2s;
-    }
+    .form-input, .form-textarea { width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:10px 14px;border-radius:10px;font-family:'DM Sans';font-size:13px;outline:none;transition:border-color .2s; }
     .form-input:focus, .form-textarea:focus { border-color:var(--amber); }
     .form-textarea { resize:vertical;min-height:70px; }
 
-    .order-btn {
-      width:100%;background:var(--amber);color:#000;border:none;padding:16px;border-radius:50px;
-      font-family:'DM Sans';font-size:15px;font-weight:700;cursor:pointer;transition:all .25s;
-      display:flex;align-items:center;justify-content:center;gap:10px;margin-top:4px;letter-spacing:.3px;
-    }
+    .order-btn { width:100%;background:var(--amber);color:#000;border:none;padding:16px;border-radius:50px;font-family:'DM Sans';font-size:15px;font-weight:700;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:4px; }
     .order-btn:hover { background:var(--amber-lt);transform:translateY(-2px);box-shadow:0 10px 30px rgba(200,133,58,.3); }
     .order-btn:disabled { opacity:.4;cursor:not-allowed;transform:none;box-shadow:none; }
-
-    .wa-btn {
-      width:100%;background:#25D366;color:#fff;border:none;padding:13px;border-radius:50px;
-      font-family:'DM Sans';font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;
-      display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;
-    }
+    .wa-btn { width:100%;background:#25D366;color:#fff;border:none;padding:13px;border-radius:50px;font-family:'DM Sans';font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px; }
     .wa-btn:hover { opacity:.85; }
 
-    /* PROCESSING */
-    .processing { display:none;flex-direction:column;align-items:center;gap:12px;padding:32px;text-align:center; }
-    .processing.show { display:flex; }
-    .spinner { width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--amber);border-radius:50%;animation:spin .8s linear infinite; }
-    @keyframes spin { to { transform:rotate(360deg); } }
-    .processing p { font-size:13px;color:var(--muted); }
-
-    /* TOAST */
     .toast { position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--surface);border:1px solid var(--amber);color:var(--cream);padding:12px 24px;border-radius:50px;font-size:14px;z-index:3000;transition:transform .4s;white-space:nowrap; }
     .toast.show { transform:translateX(-50%) translateY(0); }
 
-    /* RESPONSIVE */
     @media(max-width:900px) {
       nav { padding:14px 20px; }
       .page-hero { padding:36px 20px 24px; }
@@ -177,7 +147,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">
     <div class="logo-icon">HR</div>
@@ -186,32 +155,31 @@
   <a href="index.html" class="back-btn">← Back to Store</a>
 </nav>
 
-<!-- HERO -->
 <div class="page-hero">
   <div class="hero-tag">🖨️ Instant Pricing</div>
   <h1>3D Print <em>Price<br/>Calculator</em></h1>
   <p>Upload your STL file — we'll instantly calculate the weight, print time and price. No guessing, no waiting.</p>
 </div>
 
-<!-- CALCULATOR -->
 <div class="calc-layout">
-
-  <!-- LEFT PANEL -->
   <div class="left-panel">
 
-    <!-- Upload Zone -->
+    <!-- Upload -->
     <div class="upload-zone" id="uploadZone">
       <input type="file" id="stlFile" accept=".stl" />
       <span class="upload-icon">📦</span>
       <h3>Upload your STL file</h3>
-      <p>Drag & drop your 3D model here, or click to browse.<br/>We support binary and ASCII STL files up to 50MB.</p>
+      <p>Drag & drop your 3D model here, or click to browse.<br/>Supports binary and ASCII STL files up to 50MB.</p>
       <span class="upload-hint">.STL files only — max 50MB</span>
     </div>
 
-    <!-- Processing -->
+    <!-- Progress bar (shown during processing) -->
     <div class="processing" id="processing">
-      <div class="spinner"></div>
-      <p>Analysing your 3D model...</p>
+      <div style="font-size:32px;margin-bottom:12px;">📐</div>
+      <div style="font-family:'Playfair Display',serif;font-size:18px;color:var(--cream);margin-bottom:6px;">Analysing your model</div>
+      <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="progress-label" id="progressLabel">Reading file...</div>
+      <div class="progress-step" id="progressStep"></div>
     </div>
 
     <!-- 3D Viewer -->
@@ -233,7 +201,6 @@
     <div class="settings-card">
       <div class="settings-title">Print Settings</div>
 
-      <!-- Material -->
       <div class="setting-row">
         <span class="setting-label">Material</span>
         <div class="mat-grid">
@@ -250,7 +217,6 @@
         </div>
       </div>
 
-      <!-- Quality -->
       <div class="setting-row">
         <span class="setting-label">Print Quality</span>
         <div class="qual-grid">
@@ -269,9 +235,8 @@
         </div>
       </div>
 
-      <!-- Color -->
       <div class="setting-row">
-        <span class="setting-label">Color</span>
+        <span class="setting-label">Colour</span>
         <div class="color-row" id="colorRow">
           <div class="clr active" style="background:#f0f0f0;" data-color="White" onclick="setColor('White',this)"><span style="color:#999">✓</span></div>
           <div class="clr" style="background:#1a1a1a;border:1.5px solid #444;" data-color="Black" onclick="setColor('Black',this)"></div>
@@ -285,7 +250,6 @@
         </div>
       </div>
 
-      <!-- Infill -->
       <div class="setting-row">
         <span class="setting-label">Infill Density</span>
         <div class="infill-row">
@@ -298,7 +262,6 @@
         </div>
       </div>
 
-      <!-- Quantity -->
       <div class="setting-row" style="margin-bottom:0">
         <span class="setting-label">Quantity</span>
         <div class="qty-row">
@@ -308,70 +271,36 @@
           <span style="font-size:13px;color:var(--muted);margin-left:8px">pieces</span>
         </div>
       </div>
-
     </div>
   </div>
 
   <!-- RIGHT PANEL -->
   <div class="price-panel">
-
-    <!-- Price Card -->
     <div class="price-card">
       <div class="price-card-top">
         <h3>Price Estimate</h3>
         <p>Based on your file and settings</p>
       </div>
-
-      <!-- Empty state -->
       <div class="price-empty" id="priceEmpty">
         <div class="price-empty-icon">📤</div>
         <p>Upload your STL file above to<br/>get an instant price estimate.</p>
       </div>
-
-      <!-- Price breakdown -->
       <div id="priceBreakdown" style="display:none;">
         <div class="price-body">
-          <div class="price-line">
-            <span class="price-line-label">Material</span>
-            <span class="price-line-val" id="pb-material">PLA</span>
-          </div>
-          <div class="price-line">
-            <span class="price-line-label">Weight</span>
-            <span class="price-line-val" id="pb-weight">— g</span>
-          </div>
-          <div class="price-line">
-            <span class="price-line-label">Material cost</span>
-            <span class="price-line-val" id="pb-matcost">Rs —</span>
-          </div>
-          <div class="price-line">
-            <span class="price-line-label">Print time</span>
-            <span class="price-line-val" id="pb-time">— hrs</span>
-          </div>
-          <div class="price-line">
-            <span class="price-line-label">Labour cost</span>
-            <span class="price-line-val" id="pb-labour">Rs —</span>
-          </div>
-          <div class="price-line">
-            <span class="price-line-label">Quality</span>
-            <span class="price-line-val" id="pb-quality">Standard</span>
-          </div>
-          <div class="price-line">
-            <span class="price-line-label">Infill</span>
-            <span class="price-line-val" id="pb-infill">20%</span>
-          </div>
-          <div class="price-line">
-            <span class="price-line-label">Colour</span>
-            <span class="price-line-val" id="pb-color">White</span>
-          </div>
-          <div class="price-line">
-            <span class="price-line-label">Quantity</span>
-            <span class="price-line-val" id="pb-qty">× 1</span>
-          </div>
+          <div class="price-line"><span class="price-line-label">Material</span><span class="price-line-val" id="pb-material">PLA</span></div>
+          <div class="price-line"><span class="price-line-label">Weight</span><span class="price-line-val" id="pb-weight">— g</span></div>
+          <div class="price-line"><span class="price-line-label">Material cost</span><span class="price-line-val" id="pb-matcost">Rs —</span></div>
+          <div class="price-line"><span class="price-line-label">Print time</span><span class="price-line-val" id="pb-time">—</span></div>
+          <div class="price-line"><span class="price-line-label">Labour cost</span><span class="price-line-val" id="pb-labour">Rs —</span></div>
+          <div class="price-line"><span class="price-line-label">Quality</span><span class="price-line-val" id="pb-quality">Standard</span></div>
+          <div class="price-line"><span class="price-line-label">Infill</span><span class="price-line-val" id="pb-infill">20%</span></div>
+          <div class="price-line"><span class="price-line-label">Colour</span><span class="price-line-val" id="pb-color">White</span></div>
+          <div class="price-line"><span class="price-line-label">Quantity</span><span class="price-line-val" id="pb-qty">× 1</span></div>
         </div>
         <div class="price-total">
           <div>
             <div class="price-total-label">Total Price</div>
-            <div class="price-total-sub" id="pb-persub">per piece</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:4px;" id="pb-persub">per piece</div>
           </div>
           <div style="text-align:right;">
             <div class="price-total-amount" id="pb-total">Rs 0</div>
@@ -381,7 +310,6 @@
       </div>
     </div>
 
-    <!-- Order Form -->
     <div class="order-card">
       <div class="order-title">Place Your Order</div>
       <div class="form-group">
@@ -394,51 +322,34 @@
       </div>
       <div class="form-group">
         <label class="form-label">Special Notes</label>
-        <textarea class="form-textarea" id="o-notes" placeholder="Any special requirements, dimensions, finishing etc..."></textarea>
+        <textarea class="form-textarea" id="o-notes" placeholder="Any special requirements..."></textarea>
       </div>
-      <button class="order-btn" id="orderBtn" onclick="placeOrder()">
-        🖨️ Place 3D Print Order
-      </button>
-      <button class="wa-btn" onclick="orderViaWhatsApp()">
-        💬 Order via WhatsApp
-      </button>
+      <button class="order-btn" id="orderBtn" onclick="placeOrder()">🖨️ Place 3D Print Order</button>
+      <button class="wa-btn" onclick="orderViaWhatsApp()">💬 Order via WhatsApp</button>
     </div>
-
   </div>
 </div>
 
 <div class="toast" id="toast">✅ Done!</div>
 
-<!-- THREE.JS for 3D preview -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
 <script>
 // ── STATE ──────────────────────────────────────────
-let state = {
-  file: null,
-  volume: 0,        // cm³
-  triangles: 0,
-  material: 'PLA',
-  quality: 'standard',
-  color: 'White',
-  infill: 20,
-  qty: 1,
-  weight: 0,
-  printTime: 0,
-  totalPrice: 0,
+const state = {
+  file:null, volume:0, triangles:0,
+  material:'PLA', quality:'standard', color:'White',
+  infill:20, qty:1, weight:0, printTime:0, totalPrice:0,
 };
 
-// ── PRICING CONFIG ──────────────────────────────────
 const MATERIALS = {
-  PLA: { pricePerGram: 6, density: 1.24, name: 'PLA' },
-  ABS: { pricePerGram: 5, density: 1.05, name: 'ABS' },
+  PLA:{ pricePerGram:6, density:1.24 },
+  ABS:{ pricePerGram:5, density:1.05 },
 };
 const QUALITY = {
-  draft:    { multiplier: 0.85, speedCm3PerHr: 25, name: 'Draft' },
-  standard: { multiplier: 1.00, speedCm3PerHr: 18, name: 'Standard' },
-  fine:     { multiplier: 1.30, speedCm3PerHr: 10, name: 'Fine' },
+  draft:   { multiplier:0.85, speedCm3PerHr:25, name:'Draft' },
+  standard:{ multiplier:1.00, speedCm3PerHr:18, name:'Standard' },
+  fine:    { multiplier:1.30, speedCm3PerHr:10, name:'Fine' },
 };
-const LABOUR_PER_HOUR = 400; // Rs per hour of print time
+const LABOUR_PER_HOUR = 400;
 
 // ── DRAG & DROP ─────────────────────────────────────
 const uploadZone = document.getElementById('uploadZone');
@@ -447,171 +358,203 @@ uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag
 uploadZone.addEventListener('drop', e => {
   e.preventDefault();
   uploadZone.classList.remove('drag-over');
-  const file = e.dataTransfer.files[0];
-  if (file && file.name.toLowerCase().endsWith('.stl')) handleFile(file);
+  const f = e.dataTransfer.files[0];
+  if (f && f.name.toLowerCase().endsWith('.stl')) handleFile(f);
   else showToast('⚠️ Please upload an STL file!');
 });
 document.getElementById('stlFile').addEventListener('change', e => {
   if (e.target.files[0]) handleFile(e.target.files[0]);
 });
 
-// ── HANDLE FILE ─────────────────────────────────────
+// ── PROGRESS HELPER ─────────────────────────────────
+function setProgress(pct, label, step) {
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = label;
+  document.getElementById('progressStep').textContent = step || '';
+}
+
+// ── HANDLE FILE — single FileReader, no race condition ──
 function handleFile(file) {
   if (file.size > 50 * 1024 * 1024) { showToast('⚠️ File too large! Max 50MB.'); return; }
   state.file = file;
   document.getElementById('fileName').textContent = file.name;
   uploadZone.style.display = 'none';
   document.getElementById('processing').classList.add('show');
+  setProgress(10, 'Reading file...', '');
 
-  const reader = new FileReader();
-  reader.onload = e => {
-    const buffer = e.target.result;
-    parseSTL(buffer);
-    render3D(buffer, file.name);
-    document.getElementById('processing').classList.remove('show');
-    document.getElementById('viewerBox').classList.add('show');
-    document.getElementById('priceEmpty').style.display = 'none';
-    document.getElementById('priceBreakdown').style.display = 'block';
-    updatePrice();
-  };
-  reader.readAsArrayBuffer(buffer => {}, file);
-
-  // Use correct FileReader approach
   const fr = new FileReader();
+
+  fr.onprogress = e => {
+    if (e.lengthComputable) {
+      const pct = Math.round((e.loaded / e.total) * 40);
+      setProgress(10 + pct, 'Loading file...', Math.round(e.loaded/1024) + ' KB read');
+    }
+  };
+
   fr.onload = e => {
     const buf = e.target.result;
-    const info = parseSTL(buf);
-    state.volume = info.volume;
-    state.triangles = info.triangles;
-    render3D(buf);
-    document.getElementById('processing').classList.remove('show');
-    document.getElementById('viewerBox').classList.add('show');
-    document.getElementById('priceEmpty').style.display = 'none';
-    document.getElementById('priceBreakdown').style.display = 'block';
-    document.getElementById('fileName').textContent = file.name;
-    updateStats();
-    updatePrice();
+    setProgress(55, 'Calculating volume...', '');
+
+    // Yield to browser so progress bar renders BEFORE heavy work
+    setTimeout(() => {
+      const info = parseSTLFast(buf);
+      state.volume = info.volume;
+      state.triangles = info.triangles;
+
+      setProgress(80, 'Rendering 3D preview...', info.triangles.toLocaleString() + ' triangles');
+
+      setTimeout(() => {
+        // Lazy-load Three.js only when needed
+        loadThreeAndRender(buf, () => {
+          setProgress(100, 'Done!', '');
+          setTimeout(() => {
+            document.getElementById('processing').classList.remove('show');
+            document.getElementById('viewerBox').classList.add('show');
+            document.getElementById('priceEmpty').style.display = 'none';
+            document.getElementById('priceBreakdown').style.display = 'block';
+            updateStats();
+            updatePrice();
+          }, 200);
+        });
+      }, 50);
+    }, 30);
   };
+
+  fr.onerror = () => showToast('⚠️ Could not read file. Try again.');
   fr.readAsArrayBuffer(file);
 }
 
-// ── PARSE STL ────────────────────────────────────────
-function parseSTL(buffer) {
+// ── FAST STL PARSER ─────────────────────────────────
+// Uses typed arrays directly — no string conversion, very fast
+function parseSTLFast(buffer) {
   const view = new DataView(buffer);
-  let triangles = 0;
+  const numTris = view.getUint32(80, true);
+  const expectedBinary = 84 + numTris * 50;
   let volume = 0;
+  let triangles = 0;
 
-  // Check if binary STL
-  const numTriangles = view.getUint32(80, true);
-  const expectedSize = 84 + numTriangles * 50;
-
-  if (buffer.byteLength === expectedSize && numTriangles > 0) {
-    // Binary STL
-    triangles = numTriangles;
-    for (let i = 0; i < numTriangles; i++) {
-      const offset = 84 + i * 50;
-      const v1x = view.getFloat32(offset + 12, true);
-      const v1y = view.getFloat32(offset + 16, true);
-      const v1z = view.getFloat32(offset + 20, true);
-      const v2x = view.getFloat32(offset + 24, true);
-      const v2y = view.getFloat32(offset + 28, true);
-      const v2z = view.getFloat32(offset + 32, true);
-      const v3x = view.getFloat32(offset + 36, true);
-      const v3y = view.getFloat32(offset + 40, true);
-      const v3z = view.getFloat32(offset + 44, true);
-      // Signed volume of tetrahedron
-      volume += (v1x*(v2y*v3z - v2z*v3y) - v1y*(v2x*v3z - v2z*v3x) + v1z*(v2x*v3y - v2y*v3x)) / 6;
+  if (buffer.byteLength === expectedBinary && numTris > 0) {
+    // Binary STL — use Float32Array for speed
+    triangles = numTris;
+    const floats = new Float32Array(buffer, 84);
+    // Each triangle = 12 floats (3 normal + 3×3 vertex) + 1 uint16
+    // We read vertices at offsets 3,4,5 / 6,7,8 / 9,10,11 of each 12-float block
+    const stride = 12; // floats per triangle (we ignore the 2-byte attribute at end)
+    for (let i = 0; i < numTris; i++) {
+      const o = i * stride + 3; // skip 3 normal floats
+      const v1x = floats[o],   v1y = floats[o+1], v1z = floats[o+2];
+      const v2x = floats[o+3], v2y = floats[o+4], v2z = floats[o+5];
+      const v3x = floats[o+6], v3y = floats[o+7], v3z = floats[o+8];
+      volume += (v1x*(v2y*v3z - v2z*v3y)
+               - v1y*(v2x*v3z - v2z*v3x)
+               + v1z*(v2x*v3y - v2y*v3x)) / 6;
     }
   } else {
-    // ASCII STL
+    // ASCII STL — fast regex scan
     const text = new TextDecoder().decode(buffer);
-    const verts = text.match(/vertex\s+([\d.e+-]+)\s+([\d.e+-]+)\s+([\d.e+-]+)/gi) || [];
-    triangles = Math.floor(verts.length / 3);
+    const matches = text.match(/vertex\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)/g) || [];
+    triangles = Math.floor(matches.length / 3);
     for (let i = 0; i < triangles; i++) {
-      const parse = v => {
-        const m = v.match(/vertex\s+([\d.e+-]+)\s+([\d.e+-]+)\s+([\d.e+-]+)/i);
-        return m ? [parseFloat(m[1]), parseFloat(m[2]), parseFloat(m[3])] : [0,0,0];
-      };
-      const [v1, v2, v3] = [parse(verts[i*3]), parse(verts[i*3+1]), parse(verts[i*3+2])];
+      const parse = s => { const m = s.match(/vertex\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)/); return m ? [+m[1],+m[2],+m[3]] : [0,0,0]; };
+      const [v1,v2,v3] = [parse(matches[i*3]),parse(matches[i*3+1]),parse(matches[i*3+2])];
       volume += (v1[0]*(v2[1]*v3[2]-v2[2]*v3[1]) - v1[1]*(v2[0]*v3[2]-v2[2]*v3[0]) + v1[2]*(v2[0]*v3[1]-v2[1]*v3[0])) / 6;
     }
   }
 
-  // Convert mm³ to cm³
-  const volumeCm3 = Math.abs(volume) / 1000;
-  return { volume: volumeCm3, triangles };
+  return { volume: Math.abs(volume) / 1000, triangles };
 }
 
-// ── 3D RENDER ────────────────────────────────────────
-let threeRenderer, threeScene, threeCamera, threeMesh, animId;
+// ── LAZY LOAD THREE.JS ───────────────────────────────
+let threeLoaded = false;
+let animId;
 
+function loadThreeAndRender(buffer, callback) {
+  if (threeLoaded) { render3D(buffer); callback(); return; }
+
+  const script = document.createElement('script');
+  // Try local first, fall back to CDN
+  script.src = 'js/three.min.js';
+  script.onload = () => { threeLoaded = true; render3D(buffer); callback(); };
+  script.onerror = () => {
+    // Fallback to CDN if local file not found
+    const cdn = document.createElement('script');
+    cdn.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    cdn.onload = () => { threeLoaded = true; render3D(buffer); callback(); };
+    cdn.onerror = () => {
+      // Three.js failed — show stats without 3D preview
+      callback();
+    };
+    document.head.appendChild(cdn);
+  };
+  document.head.appendChild(script);
+}
+
+// ── 3D RENDERER ─────────────────────────────────────
 function render3D(buffer) {
+  if (typeof THREE === 'undefined') return;
   const canvas = document.getElementById('stl-canvas');
   if (animId) cancelAnimationFrame(animId);
 
-  // Setup Three.js
-  threeRenderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  threeRenderer.setSize(canvas.offsetWidth || 600, 320);
-  threeRenderer.setPixelRatio(window.devicePixelRatio);
-  threeRenderer.setClearColor(0x111111, 1);
+  const w = canvas.offsetWidth || 600;
+  const h = 300;
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x111111);
 
-  threeScene = new THREE.Scene();
-  threeCamera = new THREE.PerspectiveCamera(45, (canvas.offsetWidth || 600) / 320, 0.1, 10000);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100000);
 
-  // Parse geometry
-  const geo = new THREE.BufferGeometry();
+  // Build geometry from binary STL
   const view = new DataView(buffer);
   const numTris = view.getUint32(80, true);
-  const expectedSize = 84 + numTris * 50;
+  const expectedBinary = 84 + numTris * 50;
   const positions = [];
 
-  if (buffer.byteLength === expectedSize && numTris > 0) {
-    for (let i = 0; i < numTris; i++) {
-      const o = 84 + i * 50;
+  if (buffer.byteLength === expectedBinary && numTris > 0) {
+    // Limit triangles for rendering (max 200k for performance)
+    const maxTris = Math.min(numTris, 200000);
+    const step = numTris > 200000 ? Math.ceil(numTris / 200000) : 1;
+    const floats = new Float32Array(buffer, 84);
+    for (let i = 0; i < numTris; i += step) {
+      const o = i * 12 + 3;
       for (let v = 0; v < 3; v++) {
-        positions.push(
-          view.getFloat32(o + 12 + v*12, true),
-          view.getFloat32(o + 16 + v*12, true),
-          view.getFloat32(o + 20 + v*12, true)
-        );
+        positions.push(floats[o + v*3], floats[o + v*3+1], floats[o + v*3+2]);
       }
     }
   }
 
+  const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
   geo.computeVertexNormals();
   geo.center();
 
-  const mat = new THREE.MeshPhongMaterial({ color: 0xc8853a, specular: 0x444444, shininess: 60 });
-  threeMesh = new THREE.Mesh(geo, mat);
-  threeScene.add(threeMesh);
+  const mat = new THREE.MeshPhongMaterial({ color:0xc8853a, specular:0x333333, shininess:50 });
+  const mesh = new THREE.Mesh(geo, mat);
+  scene.add(mesh);
 
-  // Scale to fit
-  const box = new THREE.Box3().setFromObject(threeMesh);
+  const box = new THREE.Box3().setFromObject(mesh);
   const size = box.getSize(new THREE.Vector3());
   const maxDim = Math.max(size.x, size.y, size.z);
-  const scale = 100 / maxDim;
-  threeMesh.scale.set(scale, scale, scale);
+  const scale = 100 / (maxDim || 1);
+  mesh.scale.set(scale, scale, scale);
+  camera.position.set(0, 0, 220);
 
-  threeCamera.position.set(0, 0, 220);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+  const dl = new THREE.DirectionalLight(0xffffff, 0.8);
+  dl.position.set(1, 2, 3);
+  scene.add(dl);
+  const dl2 = new THREE.DirectionalLight(0xffa040, 0.4);
+  dl2.position.set(-2, -1, -1);
+  scene.add(dl2);
 
-  // Lights
-  threeScene.add(new THREE.AmbientLight(0xffffff, 0.5));
-  const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-  dirLight.position.set(1, 2, 3);
-  threeScene.add(dirLight);
-  const dirLight2 = new THREE.DirectionalLight(0xffa040, 0.4);
-  dirLight2.position.set(-2, -1, -1);
-  threeScene.add(dirLight2);
-
-  // Animate
   let rot = 0;
   function animate() {
     animId = requestAnimationFrame(animate);
     rot += 0.008;
-    threeMesh.rotation.y = rot;
-    threeMesh.rotation.x = Math.sin(rot * 0.3) * 0.2;
-    threeRenderer.render(threeScene, threeCamera);
+    mesh.rotation.y = rot;
+    mesh.rotation.x = Math.sin(rot * 0.3) * 0.2;
+    renderer.render(scene, camera);
   }
   animate();
 }
@@ -620,93 +563,57 @@ function render3D(buffer) {
 function updateStats() {
   const mat = MATERIALS[state.material];
   const q = QUALITY[state.quality];
-  const infillFactor = state.infill / 100;
-  const shellFactor = 0.25; // shell is always solid
-  const effectiveDensity = shellFactor + (1 - shellFactor) * infillFactor;
-  const weight = state.volume * mat.density * effectiveDensity;
-  const printTime = state.volume / q.speedCm3PerHr;
-
-  state.weight = weight;
-  state.printTime = printTime;
+  const effectiveDensity = 0.25 + 0.75 * (state.infill / 100);
+  state.weight = state.volume * mat.density * effectiveDensity;
+  state.printTime = state.volume / q.speedCm3PerHr;
 
   document.getElementById('stat-vol').textContent = state.volume.toFixed(1);
-  document.getElementById('stat-weight').textContent = weight.toFixed(1);
-  document.getElementById('stat-tris').textContent = state.triangles > 1000 ? (state.triangles/1000).toFixed(1)+'K' : state.triangles;
-
-  const hrs = Math.floor(printTime);
-  const mins = Math.round((printTime - hrs) * 60);
-  document.getElementById('stat-time').textContent = hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`;
+  document.getElementById('stat-weight').textContent = state.weight.toFixed(1);
+  document.getElementById('stat-tris').textContent = state.triangles > 1000
+    ? (state.triangles/1000).toFixed(1)+'K' : state.triangles;
+  const hrs = Math.floor(state.printTime);
+  const mins = Math.round((state.printTime - hrs) * 60);
+  document.getElementById('stat-time').textContent = hrs > 0 ? `${hrs}h${mins}m` : `${mins}m`;
 }
 
 // ── UPDATE PRICE ─────────────────────────────────────
 function updatePrice() {
   if (!state.file) return;
   updateStats();
-
   const mat = MATERIALS[state.material];
   const q = QUALITY[state.quality];
-
   const matCost = state.weight * mat.pricePerGram * q.multiplier;
   const labourCost = state.printTime * LABOUR_PER_HOUR;
-  const unitPrice = Math.ceil((matCost + labourCost) * 1.2); // 20% margin
-  const totalPrice = unitPrice * state.qty;
-  state.totalPrice = totalPrice;
+  const unitPrice = Math.ceil((matCost + labourCost) * 1.2);
+  state.totalPrice = unitPrice * state.qty;
 
-  // Update breakdown
-  document.getElementById('pb-material').textContent = mat.name;
+  document.getElementById('pb-material').textContent = state.material;
   document.getElementById('pb-weight').textContent = state.weight.toFixed(1) + ' g';
   document.getElementById('pb-matcost').textContent = 'Rs ' + Math.round(matCost);
-  const hrs = Math.floor(state.printTime);
-  const mins = Math.round((state.printTime - hrs) * 60);
+  const hrs = Math.floor(state.printTime), mins = Math.round((state.printTime-hrs)*60);
   document.getElementById('pb-time').textContent = hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`;
   document.getElementById('pb-labour').textContent = 'Rs ' + Math.round(labourCost);
   document.getElementById('pb-quality').textContent = q.name;
   document.getElementById('pb-infill').textContent = state.infill + '%';
   document.getElementById('pb-color').textContent = state.color;
   document.getElementById('pb-qty').textContent = '× ' + state.qty;
-  document.getElementById('pb-total').textContent = 'Rs ' + totalPrice.toLocaleString();
+  document.getElementById('pb-total').textContent = 'Rs ' + state.totalPrice.toLocaleString();
   document.getElementById('pb-persub').textContent = state.qty > 1 ? `Rs ${unitPrice.toLocaleString()} per piece` : 'per piece';
-  document.getElementById('pb-totalqty').textContent = state.qty > 1 ? `Total: Rs ${totalPrice.toLocaleString()}` : '';
+  document.getElementById('pb-totalqty').textContent = state.qty > 1 ? `Total: Rs ${state.totalPrice.toLocaleString()}` : '';
 }
 
-// ── SETTINGS HANDLERS ────────────────────────────────
-function setMaterial(mat, el) {
-  state.material = mat;
-  document.querySelectorAll('.mat-btn').forEach(b => b.classList.remove('active'));
+// ── SETTINGS ────────────────────────────────────────
+function setMaterial(m, el) { state.material = m; document.querySelectorAll('.mat-btn').forEach(b=>b.classList.remove('active')); el.classList.add('active'); updatePrice(); }
+function setQuality(q, el) { state.quality = q; document.querySelectorAll('.qual-btn').forEach(b=>b.classList.remove('active')); el.classList.add('active'); updatePrice(); }
+function setColor(c, el) {
+  state.color = c;
+  document.querySelectorAll('.clr').forEach(x=>{x.classList.remove('active');x.innerHTML='';});
   el.classList.add('active');
+  el.innerHTML = `<span style="color:${['Black'].includes(c)?'#aaa':'#555'}">✓</span>`;
   updatePrice();
 }
-
-function setQuality(q, el) {
-  state.quality = q;
-  document.querySelectorAll('.qual-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  updatePrice();
-}
-
-function setColor(color, el) {
-  state.color = color;
-  document.querySelectorAll('.clr').forEach(c => {
-    c.classList.remove('active');
-    c.innerHTML = '';
-  });
-  el.classList.add('active');
-  const isDark = ['Black','Navy'].includes(color);
-  el.innerHTML = `<span style="color:${isDark?'#aaa':'#555'}">✓</span>`;
-  updatePrice();
-}
-
-function updateInfill(val) {
-  state.infill = parseInt(val);
-  document.getElementById('infillVal').textContent = val + '%';
-  updatePrice();
-}
-
-function changeQty(delta) {
-  state.qty = Math.max(1, Math.min(99, state.qty + delta));
-  document.getElementById('qtyNum').textContent = state.qty;
-  updatePrice();
-}
+function updateInfill(v) { state.infill=parseInt(v); document.getElementById('infillVal').textContent=v+'%'; updatePrice(); }
+function changeQty(d) { state.qty=Math.max(1,Math.min(99,state.qty+d)); document.getElementById('qtyNum').textContent=state.qty; updatePrice(); }
 
 function resetFile() {
   state.file = null;
@@ -716,6 +623,7 @@ function resetFile() {
   document.getElementById('priceEmpty').style.display = 'block';
   document.getElementById('priceBreakdown').style.display = 'none';
   document.getElementById('stlFile').value = '';
+  setProgress(0,'','');
 }
 
 // ── ORDER ────────────────────────────────────────────
@@ -724,54 +632,26 @@ async function placeOrder() {
   const phone = document.getElementById('o-phone').value.trim();
   if (!state.file) { showToast('⚠️ Please upload your STL file first!'); return; }
   if (!name || !phone) { showToast('⚠️ Please enter your name and phone!'); return; }
-
+  const btn = document.getElementById('orderBtn');
+  btn.disabled = true; btn.textContent = 'Placing order...';
   const orderData = {
-    type: 'custom_order',
-    name, phone,
-    service: '3d-printing',
-    material: state.material,
-    qty: state.qty,
-    description: `3D Print Order — File: ${state.file.name} | Material: ${state.material} | Quality: ${state.quality} | Infill: ${state.infill}% | Color: ${state.color} | Weight: ${state.weight.toFixed(1)}g | Print Time: ${state.printTime.toFixed(1)}h | Price: Rs ${state.totalPrice} | Notes: ${document.getElementById('o-notes').value}`,
+    type:'custom_order', name, phone,
+    service:'3d-printing', material:state.material, qty:state.qty,
+    description:`3D Print — File:${state.file.name} | Mat:${state.material} | Quality:${state.quality} | Infill:${state.infill}% | Color:${state.color} | Weight:${state.weight.toFixed(1)}g | Time:${state.printTime.toFixed(1)}h | Price:Rs${state.totalPrice} | Notes:${document.getElementById('o-notes').value}`,
     date: new Date().toISOString(),
   };
-
-  const btn = document.getElementById('orderBtn');
-  btn.disabled = true;
-  btn.textContent = 'Placing order...';
-
   try {
-    const res = await fetch('http://localhost:3000/api/custom-order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(orderData),
-    });
-    if (res.ok) {
-      showToast('🎉 Order placed! We\'ll WhatsApp you soon.');
-      btn.textContent = '✅ Order Placed!';
-    } else throw new Error();
-  } catch {
-    orderViaWhatsApp();
-  } finally {
-    setTimeout(() => { btn.disabled = false; btn.innerHTML = '🖨️ Place 3D Print Order'; }, 3000);
-  }
+    const res = await fetch('http://localhost:3000/api/custom-order', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(orderData) });
+    if (res.ok) { showToast("🎉 Order placed! We'll WhatsApp you soon."); btn.textContent='✅ Order Placed!'; }
+    else throw new Error();
+  } catch { orderViaWhatsApp(); }
+  finally { setTimeout(()=>{ btn.disabled=false; btn.innerHTML='🖨️ Place 3D Print Order'; }, 3000); }
 }
 
 function orderViaWhatsApp() {
   const name = document.getElementById('o-name').value || 'Customer';
   const notes = document.getElementById('o-notes').value;
-  const msg = encodeURIComponent(
-    `Hi HRTE Creations! I want to place a 3D print order.\n\n` +
-    `Name: ${name}\n` +
-    `File: ${state.file ? state.file.name : 'Not uploaded yet'}\n` +
-    `Material: ${state.material}\n` +
-    `Quality: ${QUALITY[state.quality].name}\n` +
-    `Color: ${state.color}\n` +
-    `Infill: ${state.infill}%\n` +
-    `Quantity: ${state.qty}\n` +
-    `Estimated Weight: ${state.weight.toFixed(1)}g\n` +
-    `Estimated Price: Rs ${state.totalPrice.toLocaleString()}\n` +
-    (notes ? `Notes: ${notes}` : '')
-  );
+  const msg = encodeURIComponent(`Hi HRTE Creations! 3D Print Order:\n\nName: ${name}\nFile: ${state.file?state.file.name:'Not uploaded'}\nMaterial: ${state.material}\nQuality: ${QUALITY[state.quality].name}\nColor: ${state.color}\nInfill: ${state.infill}%\nQty: ${state.qty}\nEst. Weight: ${state.weight.toFixed(1)}g\nEst. Price: Rs ${state.totalPrice.toLocaleString()}\n${notes?'Notes: '+notes:''}`);
   window.open(`https://wa.me/94714754871?text=${msg}`, '_blank');
 }
 
@@ -782,7 +662,7 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 3000);
 }
 </script>
 </body>
