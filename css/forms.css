@@ -1,0 +1,222 @@
+/* ══════════════════════════════════════════════
+   forms.css — Custom order form, shared form elements,
+               gallery, testimonials, footer
+   ══════════════════════════════════════════════ */
+
+/* ── CUSTOM ORDER SECTION ── */
+.custom-order { background: var(--bg); }
+
+.custom-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.custom-steps { margin-top: 40px; display: flex; flex-direction: column; gap: 24px; }
+
+.custom-step { display: flex; gap: 16px; align-items: flex-start; }
+
+.step-num {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(200,133,58,0.12);
+  border: 1.5px solid var(--amber);
+  color: var(--amber);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.step-text h4 { font-size: 15px; font-weight: 600; color: var(--cream); margin-bottom: 4px; }
+.step-text p  { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+/* Order form card */
+.order-form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px;
+}
+.form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: var(--cream);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+.form-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+
+/* ── SHARED FORM ELEMENTS ── */
+.form-row   { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-group { margin-bottom: 14px; }
+
+.form-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  color: var(--text);
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus { border-color: var(--amber); }
+.form-select option  { background: var(--bg); }
+.form-textarea       { resize: vertical; min-height: 100px; }
+
+/* File upload box */
+.file-upload {
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.file-upload:hover  { border-color: var(--amber); }
+.file-upload input  { display: none; }
+.file-upload p      { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.file-upload span   { font-size: 28px; }
+
+/* Submit button */
+.form-submit {
+  width: 100%;
+  background: var(--amber);
+  color: #000;
+  border: none;
+  padding: 16px;
+  border-radius: 50px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  transition: all 0.25s;
+  letter-spacing: 0.3px;
+}
+.form-submit:hover {
+  background: var(--amber-lt);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(200,133,58,0.3);
+}
+
+
+/* ── GALLERY ── */
+.gallery { background: var(--surface); }
+
+.gallery-grid { columns: 3; column-gap: 16px; }
+
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  height: 200px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.gallery-item:nth-child(1) { height: 260px; }
+.gallery-item:nth-child(4) { height: 300px; }
+.gallery-item:nth-child(7) { height: 240px; }
+.gallery-item:hover { transform: scale(0.98); }
+
+.gallery-item-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(0, rgba(0,0,0,0.8), transparent);
+  padding: 16px 14px 10px;
+  font-size: 13px; font-weight: 600; color: var(--cream);
+}
+
+
+/* ── TESTIMONIALS ── */
+.testimonials { background: var(--bg); }
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.testimonial {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+.stars { color: var(--amber); font-size: 14px; margin-bottom: 12px; }
+.testimonial-text {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+.testimonial-author { display: flex; align-items: center; gap: 10px; }
+.author-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--amber);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: #000;
+}
+.author-name { font-size: 14px; font-weight: 600; color: var(--cream); }
+.author-role { font-size: 12px; color: var(--muted); }
+
+
+/* ── FOOTER ── */
+footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 60px 48px 30px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.footer-brand p {
+  font-size: 14px; color: var(--muted);
+  line-height: 1.7; margin-top: 16px; max-width: 280px;
+}
+.footer-col h4 {
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--cream); margin-bottom: 16px;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul a { color: var(--muted); font-size: 14px; text-decoration: none; transition: color 0.2s; }
+.footer-col ul a:hover { color: var(--amber); }
+
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-bottom p { font-size: 13px; color: var(--muted); }
+.footer-bottom a { color: var(--amber); text-decoration: none; }

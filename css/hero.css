@@ -1,0 +1,248 @@
+/* ══════════════════════════════════════════════
+   hero.css — Hero slideshow, stats bar, service categories
+   ══════════════════════════════════════════════ */
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 680px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 100px 48px 80px;
+  background: var(--bg);
+}
+
+/* Slides pinned to the RIGHT */
+.hero-slides {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  left: 38%;
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+.hero-slide.active { opacity: 1; }
+
+/* Fallback colours when no media is set */
+.slide-1 { background-color: #2a1a0a; }
+.slide-2 { background-color: #0a1a2a; }
+.slide-3 { background-color: #1a0a2a; }
+.slide-4 { background-color: #1a1a0a; }
+
+/* Left fade — blends media into the dark text area */
+.hero-fade-left {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 28%;
+  width: 36%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    #0a0a0a             0%,
+    #0a0a0a             30%,
+    rgba(10,10,10,0.92) 45%,
+    rgba(10,10,10,0.72) 58%,
+    rgba(10,10,10,0.42) 72%,
+    rgba(10,10,10,0.15) 86%,
+    transparent         100%
+  );
+}
+
+/* Bottom vignette */
+.hero-fade-bottom {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 220px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.2) 60%, transparent 100%);
+}
+
+/* Text content — left side */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 580px;
+  width: 50%;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(200,133,58,0.12);
+  border: 1px solid rgba(200,133,58,0.3);
+  color: var(--amber);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 50px;
+  margin-bottom: 24px;
+}
+.hero-tag::before { content: '●'; font-size: 8px; animation: blink 1.5s infinite; }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(48px, 7vw, 96px);
+  font-weight: 900;
+  line-height: 0.95;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+.hero h1 em { font-style: italic; color: var(--amber); }
+
+.hero p {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 40px;
+  max-width: 480px;
+  font-weight: 300;
+}
+
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+/* Slide dots */
+.hero-dots {
+  position: absolute;
+  bottom: 40px; right: 48px;
+  z-index: 2;
+  display: flex; gap: 8px;
+}
+.hero-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.hero-dot.active { background: var(--amber); width: 28px; border-radius: 4px; }
+
+
+/* ── STATS BAR ── */
+.stats-bar {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  color: var(--amber);
+  letter-spacing: 1px;
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+
+/* ── CATEGORIES (Services section) ── */
+.categories { background: var(--bg); }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.cat-card {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  height: 320px;
+  cursor: pointer;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: transform 0.3s;
+}
+.cat-card:hover              { transform: translateY(-6px); }
+.cat-card:hover .cat-overlay { opacity: 1; }
+.cat-card:first-child        { grid-row: span 2; height: auto; min-height: 660px; }
+
+.cat-bg {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 80px;
+  opacity: 0.12;
+}
+
+.cat-overlay {
+  position: absolute; inset: 0;
+  background: rgba(200,133,58,0.08);
+  opacity: 0;
+  transition: opacity 0.3s;
+  border: 1.5px solid var(--amber);
+  border-radius: var(--radius);
+}
+
+.cat-content {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 28px;
+  background: linear-gradient(0deg, rgba(10,10,10,0.95) 0%, transparent 100%);
+}
+.cat-icon  { font-size: 28px; margin-bottom: 8px; }
+.cat-name  {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 4px;
+}
+.cat-desc  { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.cat-count {
+  display: inline-block;
+  margin-top: 10px;
+  background: rgba(200,133,58,0.15);
+  color: var(--amber);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* 3D Calculator quick quote button inside category card */
+.cat-calc-btn {
+  display: inline-block;
+  margin-top: 12px;
+  background: var(--amber);
+  color: #000;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: background .2s;
+}
+.cat-calc-btn:hover { background: var(--amber-lt); }

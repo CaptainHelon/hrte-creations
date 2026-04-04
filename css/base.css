@@ -1,0 +1,181 @@
+/* ══════════════════════════════════════════════
+   base.css — Variables, Reset, Shared Styles
+   Edit this file to change colours, fonts, spacing
+   ══════════════════════════════════════════════ */
+
+/* ── RESET ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── COLOUR & SPACING VARIABLES ──
+   Change these to restyle the whole site instantly */
+:root {
+  --bg:         #0a0a0a;    /* main background */
+  --surface:    #131313;    /* card backgrounds */
+  --surface2:   #1c1c1c;    /* input backgrounds */
+  --border:     #2a2a2a;    /* borders */
+  --amber:      #c8853a;    /* primary accent */
+  --amber-lt:   #e8a05a;    /* hover accent */
+  --orange:     #ff6b2b;    /* badge colour */
+  --cream:      #f5efe6;    /* heading text */
+  --text:       #e8e0d5;    /* body text */
+  --muted:      #7a7060;    /* subtle text */
+  --white:      #ffffff;
+  --radius:     12px;       /* default border radius */
+  --cart-width: 380px;      /* cart sidebar width */
+}
+
+/* ── BASE ── */
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 3px; }
+
+/* ── SHARED SECTION STYLES ── */
+section { padding: 100px 48px; }
+
+.section-header { margin-bottom: 60px; }
+
+.section-tag {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--amber);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.section-tag::before {
+  content: '';
+  width: 30px;
+  height: 1.5px;
+  background: var(--amber);
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 4vw, 54px);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.1;
+}
+.section-title em { font-style: italic; color: var(--amber); }
+
+.section-sub {
+  color: var(--muted);
+  font-size: 16px;
+  margin-top: 14px;
+  font-weight: 300;
+  max-width: 500px;
+  line-height: 1.7;
+}
+
+/* ── SHARED BUTTONS ── */
+.btn-primary {
+  background: var(--amber);
+  color: #000;
+  border: none;
+  padding: 16px 36px;
+  border-radius: 50px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s;
+  letter-spacing: 0.3px;
+}
+.btn-primary:hover {
+  background: var(--amber-lt);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(200,133,58,0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--cream);
+  border: 1.5px solid var(--border);
+  padding: 16px 36px;
+  border-radius: 50px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s;
+}
+.btn-outline:hover { border-color: var(--amber); color: var(--amber); }
+
+/* ── SCROLL REVEAL ANIMATION ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── TOAST NOTIFICATION ── */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--surface);
+  border: 1px solid var(--amber);
+  color: var(--cream);
+  padding: 14px 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 3000;
+  transition: transform 0.4s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ── FLOATING WHATSAPP BUTTON ── */
+.float-wa {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 999;
+  background: #25D366;
+  color: #fff;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  text-decoration: none;
+  box-shadow: 0 8px 30px rgba(37,211,102,0.4);
+  animation: float-pulse 3s ease-in-out infinite;
+  transition: transform 0.2s;
+}
+.float-wa:hover { transform: scale(1.1); }
+
+@keyframes float-pulse {
+  0%, 100% { box-shadow: 0 8px 30px rgba(37,211,102,0.4); }
+  50%       { box-shadow: 0 12px 40px rgba(37,211,102,0.6); }
+}

@@ -1,0 +1,55 @@
+/* ══════════════════════════════════════════════
+   responsive.css — Mobile & tablet breakpoints
+   Edit this file to fix layout on small screens
+   ══════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+
+  /* Navbar */
+  nav        { padding: 16px 24px; }
+  .nav-links { display: none; }
+
+  /* Sections */
+  section    { padding: 70px 24px; }
+  .stats-bar { padding: 20px 24px; }
+
+  /* Hero — slides go full width on mobile */
+  .hero { padding: 70px 24px; }
+
+  .hero-slides {
+    left: 0;
+  }
+  .hero-fade-left {
+    left: 0;
+    width: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(10,10,10,0.92) 0%,
+      rgba(10,10,10,0.75) 50%,
+      rgba(10,10,10,0.4)  100%
+    );
+  }
+  .hero-content {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Categories */
+  .cat-grid             { grid-template-columns: 1fr; }
+  .cat-card:first-child { min-height: 320px; }
+
+  /* Custom order form */
+  .custom-layout { grid-template-columns: 1fr; }
+
+  /* Gallery */
+  .gallery-grid { columns: 2; }
+
+  /* Testimonials */
+  .testimonials-grid { grid-template-columns: 1fr; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Cart */
+  .cart-sidebar { width: 100%; }
+}

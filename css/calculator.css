@@ -1,0 +1,264 @@
+/* ══════════════════════════════════════════════
+   calculator.css — 3D Print Price Calculator
+   ══════════════════════════════════════════════ */
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --bg:#0a0a0a; --surface:#131313; --surface2:#1c1c1c; --border:#2a2a2a;
+  --amber:#c8853a; --amber-lt:#e8a05a; --cream:#f5efe6; --text:#e8e0d5;
+  --muted:#7a7060; --radius:12px;
+}
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; }
+::-webkit-scrollbar{width:6px} ::-webkit-scrollbar-track{background:var(--bg)} ::-webkit-scrollbar-thumb{background:var(--amber);border-radius:3px}
+
+/* NAV */
+nav { position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(200,133,58,0.15); }
+.nav-logo { display:flex;align-items:center;gap:12px;text-decoration:none; }
+.logo-icon { width:38px;height:38px;background:var(--amber);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:18px;color:#000; }
+.logo-text { font-family:'Playfair Display',serif;font-size:16px;color:var(--cream);line-height:1.1; }
+.logo-text span { display:block;font-size:9px;letter-spacing:3px;color:var(--amber);font-family:'DM Sans';font-weight:500;text-transform:uppercase; }
+.back-btn { display:flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s; }
+.back-btn:hover { color:var(--amber); }
+
+/* PAGE HERO */
+.page-hero { padding:50px 48px 36px;border-bottom:1px solid var(--border); }
+.hero-tag { display:inline-flex;align-items:center;gap:8px;background:rgba(200,133,58,0.1);border:1px solid rgba(200,133,58,0.25);color:var(--amber);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:50px;margin-bottom:14px; }
+.page-hero h1 { font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,52px);font-weight:900;color:var(--cream);line-height:1.0;margin-bottom:12px; }
+.page-hero h1 em { font-style:italic;color:var(--amber); }
+.page-hero p { color:var(--muted);font-size:15px;font-weight:300;max-width:500px;line-height:1.7; }
+
+/* LAYOUT */
+.calc-layout { display:grid;grid-template-columns:1fr 400px;gap:24px;padding:28px 48px 60px;align-items:start; }
+.left-panel  { display:flex;flex-direction:column;gap:20px; }
+
+/* UPLOAD ZONE */
+.upload-zone { border:2px dashed var(--border);border-radius:20px;padding:52px 32px;text-align:center;cursor:pointer;transition:all .3s;position:relative;background:var(--surface); }
+.upload-zone:hover,.upload-zone.drag-over { border-color:var(--amber);background:rgba(200,133,58,0.04); }
+.upload-zone input { position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%; }
+.upload-icon  { font-size:52px;margin-bottom:16px;display:block; }
+.upload-zone h3 { font-family:'Playfair Display',serif;font-size:22px;color:var(--cream);margin-bottom:8px; }
+.upload-zone p  { font-size:13px;color:var(--muted);line-height:1.6; }
+.upload-hint    { display:inline-block;margin-top:14px;background:rgba(200,133,58,0.1);color:var(--amber);font-size:12px;font-weight:600;padding:6px 16px;border-radius:20px;border:1px solid rgba(200,133,58,0.25); }
+
+/* PROGRESS */
+.processing      { display:none;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px 32px;text-align:center; }
+.processing.show { display:block; }
+.progress-wrap   { background:var(--border);border-radius:4px;height:6px;margin:20px 0 10px;overflow:hidden; }
+.progress-bar    { height:100%;background:var(--amber);border-radius:4px;width:0%;transition:width .3s ease; }
+.progress-label  { font-size:13px;color:var(--muted); }
+.progress-step   { font-size:12px;color:var(--amber);margin-top:6px;font-weight:600; }
+
+/* ══════════════════════════════════════════
+   3D VIEWER WITH SCROLLABLE FILE TABS
+══════════════════════════════════════════ */
+.viewer-card {
+  display: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.viewer-card.show { display: block; }
+
+/* Scrollable file tabs row */
+.viewer-tabs-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+  overflow: hidden;
+}
+
+/* Scroll arrows */
+.tab-scroll-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 18px;
+  padding: 0 12px;
+  height: 44px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color .2s;
+  display: flex;
+  align-items: center;
+}
+.tab-scroll-btn:hover { color: var(--amber); }
+
+/* Tabs container — horizontally scrollable */
+.viewer-tabs {
+  display: flex;
+  overflow-x: auto;
+  flex: 1;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+.viewer-tabs::-webkit-scrollbar { display: none; }
+
+/* Individual tab */
+.viewer-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  height: 44px;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  border-right: 1px solid var(--border);
+  transition: all .2s;
+  flex-shrink: 0;
+  border-bottom: 2px solid transparent;
+}
+.viewer-tab:hover  { color: var(--cream); background: rgba(255,255,255,0.03); }
+.viewer-tab.active { color: var(--amber); border-bottom-color: var(--amber); background: rgba(200,133,58,0.05); }
+
+.tab-remove {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: all .2s;
+  margin-left: 2px;
+}
+.tab-remove:hover { color: #e74c3c; background: rgba(231,76,60,0.15); }
+
+/* Add more button inside tab row */
+.tab-add-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 20px;
+  padding: 0 14px;
+  height: 44px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color .2s;
+  display: flex;
+  align-items: center;
+}
+.tab-add-btn:hover { color: var(--amber); }
+
+/* Canvas */
+#stl-canvas { width:100%; height:320px; display:block; background:#0d0d0d; }
+
+/* Viewer bottom stats bar */
+.viewer-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+}
+.v-stat            { padding:12px;text-align:center;border-right:1px solid var(--border); }
+.v-stat:last-child { border-right:none; }
+.v-stat-val { font-family:'Bebas Neue';font-size:20px;color:var(--amber);letter-spacing:1px; }
+.v-stat-lbl { font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px; }
+
+/* SETTINGS */
+.settings-card  { background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:26px; }
+.settings-title { font-family:'Playfair Display',serif;font-size:17px;color:var(--cream);margin-bottom:20px;font-weight:700; }
+.setting-row    { margin-bottom:18px; }
+.setting-label  { font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:block; }
+
+.mat-grid { display:grid;grid-template-columns:1fr 1fr;gap:8px; }
+.mat-btn  { background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .2s;text-align:left; }
+.mat-btn:hover  { border-color:rgba(200,133,58,0.4); }
+.mat-btn.active { border-color:var(--amber);background:rgba(200,133,58,0.06); }
+.mat-name  { font-size:14px;font-weight:600;color:var(--cream); }
+.mat-desc  { font-size:11px;color:var(--muted);margin-top:2px; }
+.mat-price { font-family:'Bebas Neue';font-size:15px;color:var(--amber);letter-spacing:1px;margin-top:4px; }
+
+.qual-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:8px; }
+.qual-btn  { background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 6px;cursor:pointer;transition:all .2s;text-align:center; }
+.qual-btn:hover  { border-color:rgba(200,133,58,0.4); }
+.qual-btn.active { border-color:var(--amber);background:rgba(200,133,58,0.06); }
+.qual-name   { font-size:13px;font-weight:600;color:var(--cream); }
+.qual-detail { font-size:10px;color:var(--muted);margin-top:2px; }
+
+.color-row { display:flex;gap:8px;flex-wrap:wrap; }
+.clr       { width:32px;height:32px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700; }
+.clr:hover  { transform:scale(1.1); }
+.clr.active { border-color:var(--amber); }
+
+.infill-row { display:flex;align-items:center;gap:12px; }
+.infill-row input[type=range] { flex:1;-webkit-appearance:none;height:4px;background:var(--border);border-radius:2px;outline:none; }
+.infill-row input[type=range]::-webkit-slider-thumb { -webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--amber);cursor:pointer; }
+.infill-val { font-family:'Bebas Neue';font-size:18px;color:var(--amber);min-width:40px;text-align:right;letter-spacing:1px; }
+
+.qty-row { display:flex;align-items:center;gap:12px; }
+.qty-btn { width:36px;height:36px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s; }
+.qty-btn:hover { border-color:var(--amber);color:var(--amber); }
+.qty-num { font-family:'Bebas Neue';font-size:24px;color:var(--cream);min-width:30px;text-align:center;letter-spacing:1px; }
+
+/* PRICE PANEL */
+.price-panel        { position:sticky;top:80px;display:flex;flex-direction:column;gap:16px; }
+.price-card         { background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden; }
+.price-card-top     { background:rgba(200,133,58,0.08);border-bottom:1px solid var(--border);padding:20px 24px; }
+.price-card-top h3  { font-family:'Playfair Display',serif;font-size:16px;color:var(--cream);margin-bottom:4px; }
+.price-card-top p   { font-size:12px;color:var(--muted); }
+.price-empty        { padding:32px 24px;text-align:center; }
+.price-empty-icon   { font-size:40px;opacity:.3;margin-bottom:12px; }
+.price-empty p      { font-size:13px;color:var(--muted);line-height:1.6; }
+.price-body         { padding:20px 24px; }
+.price-line         { display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04); }
+.price-line:last-child { border-bottom:none; }
+.price-line-label   { font-size:13px;color:var(--muted); }
+.price-line-val     { font-size:13px;color:var(--text);font-weight:500; }
+
+/* Per-file breakdown inside price panel */
+.file-breakdown {
+  padding: 0 24px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.file-breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.file-breakdown-item:last-child { border-bottom: none; }
+.file-breakdown-name { color: var(--text); max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-breakdown-price { color: var(--amber); font-weight: 600; font-family: 'Bebas Neue'; letter-spacing: 1px; font-size: 14px; }
+
+.price-total        { padding:20px 24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end; }
+.price-total-label  { font-size:12px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase; }
+.price-total-amount { font-family:'Bebas Neue';font-size:42px;color:var(--amber);letter-spacing:2px;line-height:1; }
+
+/* ORDER CARD */
+.order-card  { background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:24px; }
+.order-title { font-family:'Playfair Display',serif;font-size:17px;color:var(--cream);margin-bottom:16px;font-weight:700; }
+.form-group  { margin-bottom:12px; }
+.form-label  { font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:block; }
+.form-input,.form-textarea { width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:10px 14px;border-radius:10px;font-family:'DM Sans';font-size:13px;outline:none;transition:border-color .2s; }
+.form-input:focus,.form-textarea:focus { border-color:var(--amber); }
+.form-textarea { resize:vertical;min-height:70px; }
+
+.order-btn { width:100%;background:var(--amber);color:#000;border:none;padding:16px;border-radius:50px;font-family:'DM Sans';font-size:15px;font-weight:700;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:4px; }
+.order-btn:hover    { background:var(--amber-lt);transform:translateY(-2px);box-shadow:0 10px 30px rgba(200,133,58,.3); }
+.order-btn:disabled { opacity:.4;cursor:not-allowed;transform:none;box-shadow:none; }
+.wa-btn { width:100%;background:#25D366;color:#fff;border:none;padding:13px;border-radius:50px;font-family:'DM Sans';font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px; }
+.wa-btn:hover { opacity:.85; }
+
+/* TOAST */
+.toast      { position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--surface);border:1px solid var(--amber);color:var(--cream);padding:12px 24px;border-radius:50px;font-size:14px;z-index:3000;transition:transform .4s;white-space:nowrap; }
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* RESPONSIVE */
+@media(max-width:900px) {
+  nav { padding:14px 20px; }
+  .page-hero { padding:36px 20px 24px; }
+  .calc-layout { grid-template-columns:1fr;padding:20px; }
+  .price-panel { position:static; }
+  .viewer-stats { grid-template-columns:repeat(2,1fr); }
+  .v-stat:nth-child(2) { border-right:none; }
+}
