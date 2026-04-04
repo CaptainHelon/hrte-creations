@@ -47,56 +47,22 @@
       <div class="progress-step"  id="progressStep"></div>
     </div>
 
-    <!-- ══════════════════════════════════════════
-         3D VIEWER WITH SCROLLABLE FILE TABS
-         Each tab = one uploaded file
-         Click tab → see that file's 3D model
-    ══════════════════════════════════════════ -->
+    <!-- 3D VIEWER WITH SCROLLABLE TABS -->
     <div class="viewer-card" id="viewerCard">
-
-      <!-- Tab row with scroll arrows -->
       <div class="viewer-tabs-row">
-
-        <!-- Left scroll arrow -->
-        <button class="tab-scroll-btn" onclick="scrollTabs(-1)" title="Scroll left">‹</button>
-
-        <!-- Scrollable tabs — one per file -->
-        <div class="viewer-tabs" id="viewerTabs">
-          <!-- Tabs injected by calculator.js → renderTabs() -->
-        </div>
-
-        <!-- Right scroll arrow -->
-        <button class="tab-scroll-btn" onclick="scrollTabs(1)" title="Scroll right">›</button>
-
-        <!-- Add more files button -->
+        <button class="tab-scroll-btn" onclick="scrollTabs(-1)">‹</button>
+        <div class="viewer-tabs" id="viewerTabs"></div>
+        <button class="tab-scroll-btn" onclick="scrollTabs(1)">›</button>
         <button class="tab-add-btn" onclick="addMoreFiles()" title="Add more files">＋</button>
-
       </div>
-
-      <!-- 3D Canvas — shows the active file's model -->
       <canvas id="stl-canvas"></canvas>
-
-      <!-- Stats bar for the active file -->
       <div class="viewer-stats">
-        <div class="v-stat">
-          <div class="v-stat-val" id="stat-vol">—</div>
-          <div class="v-stat-lbl">Volume cm³</div>
-        </div>
-        <div class="v-stat">
-          <div class="v-stat-val" id="stat-weight">—</div>
-          <div class="v-stat-lbl">Weight (g)</div>
-        </div>
-        <div class="v-stat">
-          <div class="v-stat-val" id="stat-time">—</div>
-          <div class="v-stat-lbl">Print Time</div>
-        </div>
-        <div class="v-stat">
-          <div class="v-stat-val" id="stat-tris">—</div>
-          <div class="v-stat-lbl">Triangles</div>
-        </div>
+        <div class="v-stat"><div class="v-stat-val" id="stat-vol">—</div><div class="v-stat-lbl">Volume cm³</div></div>
+        <div class="v-stat"><div class="v-stat-val" id="stat-weight">—</div><div class="v-stat-lbl">Weight (g)</div></div>
+        <div class="v-stat"><div class="v-stat-val" id="stat-time">—</div><div class="v-stat-lbl">Print Time</div></div>
+        <div class="v-stat"><div class="v-stat-val" id="stat-tris">—</div><div class="v-stat-lbl">Triangles</div></div>
       </div>
-
-    </div><!-- end viewer-card -->
+    </div>
 
     <!-- PRINT SETTINGS -->
     <div class="settings-card">
@@ -109,24 +75,20 @@
           <div class="mat-btn active" onclick="setMaterial('PLA',this)">
             <div class="mat-name">PLA</div>
             <div class="mat-desc">Biodegradable · Easy print</div>
-            <div class="mat-price">Rs 6 / gram</div>
+            <div class="mat-price">Rs 5 / gram</div>
           </div>
           <div class="mat-btn" onclick="setMaterial('ABS',this)">
             <div class="mat-name">ABS</div>
             <div class="mat-desc">Strong · Heat resistant</div>
-            <div class="mat-price">Rs 5 / gram</div>
+            <div class="mat-price">Rs 8 / gram</div>
           </div>
         </div>
       </div>
 
-      <!-- Quality -->
+      <!-- Quality — Draft removed, only Standard and Fine -->
       <div class="setting-row">
         <span class="setting-label">Print Quality</span>
-        <div class="qual-grid">
-          <div class="qual-btn" onclick="setQuality('draft',this)">
-            <div class="qual-name">Draft</div>
-            <div class="qual-detail">0.3mm · Fast</div>
-          </div>
+        <div class="qual-grid" style="grid-template-columns:1fr 1fr;">
           <div class="qual-btn active" onclick="setQuality('standard',this)">
             <div class="qual-name">Standard</div>
             <div class="qual-detail">0.2mm · Balanced</div>
@@ -180,12 +142,12 @@
         </div>
       </div>
 
-    </div><!-- end settings-card -->
+    </div>
 
   </div><!-- end left-panel -->
 
 
-  <!-- RIGHT PANEL — price estimate + order form -->
+  <!-- RIGHT PANEL -->
   <div class="price-panel">
 
     <div class="price-card">
@@ -193,32 +155,22 @@
         <h3>Price Estimate</h3>
         <p>Combined total for all uploaded files</p>
       </div>
-
-      <!-- Empty state -->
       <div class="price-empty" id="priceEmpty">
         <div class="price-empty-icon">📤</div>
         <p>Upload your STL files to get<br/>an instant price estimate.</p>
       </div>
-
-      <!-- Price breakdown -->
       <div id="priceBreakdown" style="display:none;">
-
-        <!-- Per-file price list -->
-        <div class="file-breakdown" id="fileBreakdownList">
-          <!-- Injected by calculator.js -->
-        </div>
-
+        <div class="file-breakdown" id="fileBreakdownList"></div>
         <div class="price-body">
-          <div class="price-line"><span class="price-line-label">Files</span>            <span class="price-line-val" id="pb-files">—</span></div>
-          <div class="price-line"><span class="price-line-label">Material</span>         <span class="price-line-val" id="pb-material">PLA</span></div>
-          <div class="price-line"><span class="price-line-label">Total weight</span>     <span class="price-line-val" id="pb-weight">— g</span></div>
-          <div class="price-line"><span class="price-line-label">Total print time</span> <span class="price-line-val" id="pb-time">—</span></div>
-          <div class="price-line"><span class="price-line-label">Quality</span>          <span class="price-line-val" id="pb-quality">Standard</span></div>
-          <div class="price-line"><span class="price-line-label">Infill</span>           <span class="price-line-val" id="pb-infill">20%</span></div>
-          <div class="price-line"><span class="price-line-label">Colour</span>           <span class="price-line-val" id="pb-color">White</span></div>
-          <div class="price-line"><span class="price-line-label">Quantity</span>         <span class="price-line-val" id="pb-qty">× 1</span></div>
+          <div class="price-line"><span class="price-line-label">Files</span>             <span class="price-line-val" id="pb-files">—</span></div>
+          <div class="price-line"><span class="price-line-label">Material</span>          <span class="price-line-val" id="pb-material">PLA</span></div>
+          <div class="price-line"><span class="price-line-label">Total weight</span>      <span class="price-line-val" id="pb-weight">— g</span></div>
+          <div class="price-line"><span class="price-line-label">Total print time</span>  <span class="price-line-val" id="pb-time">—</span></div>
+          <div class="price-line"><span class="price-line-label">Quality</span>           <span class="price-line-val" id="pb-quality">Standard</span></div>
+          <div class="price-line"><span class="price-line-label">Infill</span>            <span class="price-line-val" id="pb-infill">20%</span></div>
+          <div class="price-line"><span class="price-line-label">Colour</span>            <span class="price-line-val" id="pb-color">White</span></div>
+          <div class="price-line"><span class="price-line-label">Quantity</span>          <span class="price-line-val" id="pb-qty">× 1</span></div>
         </div>
-
         <div class="price-total">
           <div>
             <div class="price-total-label">Total Price</div>
@@ -229,16 +181,13 @@
             <div style="font-size:11px;color:var(--muted);margin-top:4px;" id="pb-totalqty"></div>
           </div>
         </div>
-
-        <!-- Reset button -->
-        <div style="padding:0 24px 16px; text-align:right;">
+        <div style="padding:0 24px 16px;text-align:right;">
           <button onclick="resetAll()" style="background:none;border:1px solid var(--border);color:var(--muted);padding:6px 16px;border-radius:20px;font-size:12px;cursor:pointer;font-family:'DM Sans';transition:all .2s;"
             onmouseover="this.style.borderColor='#e74c3c';this.style.color='#e74c3c'"
             onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
             🗑️ Clear All Files
           </button>
         </div>
-
       </div>
     </div>
 
@@ -257,16 +206,37 @@
         <label class="form-label">Special Notes</label>
         <textarea class="form-textarea" id="o-notes" placeholder="Any special requirements..."></textarea>
       </div>
+
+      <!-- Main order button -->
       <button class="order-btn" id="orderBtn" onclick="placeOrder()">🖨️ Place 3D Print Order</button>
+
+      <!-- WhatsApp button -->
       <button class="wa-btn" onclick="orderViaWhatsApp()">💬 Order via WhatsApp</button>
+
+      <!-- Divider -->
+      <div style="display:flex;align-items:center;gap:10px;margin:16px 0 12px;">
+        <div style="flex:1;height:1px;background:var(--border);"></div>
+        <span style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">and upload your STL directly</span>
+        <div style="flex:1;height:1px;background:var(--border);"></div>
+      </div>
+
+      <!-- Google Form button -->
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdjRAHeWqBVJD8C92E96_npuYGEQTQfzR-uuJ_HRHkC712Nzw/viewform?usp=dialog"
+         target="_blank"
+         class="gform-btn">
+        📋 Submit Order with STL File via Google Form
+      </a>
+      <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5;">
+        Upload your STL file directly to us via Google Form<br/>— saved to our Google Drive instantly ✅
+      </p>
+
     </div>
 
-  </div><!-- end price-panel -->
+  </div>
 
-</div><!-- end calc-layout -->
+</div>
 
 <div class="toast" id="toast">✅ Done!</div>
-
 <script src="js/calculator.js"></script>
 </body>
 </html>
