@@ -1,22 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="description" content="Sri Lanka's premier custom laser engraving and 3D printing studio. Wooden photo engravings, key tags, business signs, 3D printed phone covers and more. Order online!" />
+
+<meta property="og:title" content="HRTE Creations — Laser & 3D Print Studio Sri Lanka" />
+<meta property="og:description" content="Custom laser engraving, CNC cutting & 3D printing in Sri Lanka. Order online at hrtecreations.com" />
+<meta property="og:image" content="https://hrtecreations.com/images/tig2.jpeg" />
+<meta property="og:url" content="https://hrtecreations.com" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>HRTE Creations – Laser & 3D Print Studio</title>
 
-  <!-- FAVICON — shows in browser tab -->
+  <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23c8853a'/><text y='.9em' x='50%' text-anchor='middle' font-size='58' font-family='serif' font-weight='900' fill='black'>HR</text></svg>" />
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet" />
 
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css" />
+  <!-- ══ CSS FILES — edit individual files instead of one huge style.css ══
+       base.css       → colours, fonts, variables, shared buttons
+       navbar.css     → top navigation bar
+       hero.css       → hero slideshow, stats bar, service cards
+       shop.css       → product grid, filter buttons, product cards
+       forms.css      → custom order form, gallery, testimonials, footer
+       cart-modal.css → cart sidebar + checkout modal
+       responsive.css → mobile/tablet breakpoints
+  -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/shop.css" />
+  <link rel="stylesheet" href="css/forms.css" />
+  <link rel="stylesheet" href="css/cart-modal.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!-- ══ NAVBAR ══════════════════════════════════════════ -->
 <nav id="navbar">
   <a href="#" class="nav-logo">
     <div class="logo-icon">HR</div>
@@ -38,98 +59,118 @@
   </div>
 </nav>
 
-<!-- HERO -->
+
+<!-- ══ HERO SLIDESHOW ══════════════════════════════════
+     Image slide:  style="background-image: url('images/yourphoto.jpg');"
+     Video slide:  add a <video> tag inside the div
+════════════════════════════════════════════════════════ -->
 <section class="hero" id="home">
   <div class="hero-slides">
+
     <div class="hero-slide slide-1 active" style="background-image: url('images/tig2.jpeg');"></div>
+
     <div class="hero-slide slide-2">
       <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;">
         <source src="images/3dprint5.mp4" type="video/mp4">
         <img src="images/hero2.jpg" style="width:100%;height:100%;object-fit:cover;" />
       </video>
     </div>
+
     <div class="hero-slide slide-4">
       <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;">
         <source src="images/laser1.mp4" type="video/mp4">
         <img src="images/hero4.jpg" style="width:100%;height:100%;object-fit:cover;" />
       </video>
     </div>
+
     <div class="hero-slide slide-3" style="background-image: url('images/tig1.jpeg');"></div>
+
   </div>
+
   <div class="hero-fade-left"></div>
   <div class="hero-fade-bottom"></div>
+
   <div class="hero-content">
     <div class="hero-tag">🔥 Sri Lanka's Custom Maker Studio</div>
     <h1>Crafted<br/>With <em>Laser<br/>Precision</em></h1>
-    <p>Custom laser engraving, CNC cutting & 3D printing — from personalised gifts to business signage. Every piece, uniquely yours.</p>
+    <p>Custom laser engraving, CNC cutting & 3D printing — from personalised gifts to business signage. Every piece, uniquely yours. We provide the most chepest price for you orders</p>
     <div class="hero-actions">
-      <a href="#shop" class="btn-primary">🛍️ Shop Products</a>
+      <a href="#shop"   class="btn-primary">🛍️ Shop Products</a>
       <a href="#custom" class="btn-outline">✏️ Place Custom Order</a>
     </div>
+    <div style="height: 20px;"></div>
+     <div class="stat-num" style="font-size:22px;">🚚 Delivery only Available around Colombo</div>
+    <div class="stat-label">For the first 1Kg or below, Delivery Fee: LKR 200.00 rs</div>
   </div>
+
   <div class="hero-dots">
     <div class="hero-dot active" onclick="goToSlide(0)"></div>
-    <div class="hero-dot" onclick="goToSlide(1)"></div>
-    <div class="hero-dot" onclick="goToSlide(2)"></div>
-    <div class="hero-dot" onclick="goToSlide(3)"></div>
+    <div class="hero-dot"        onclick="goToSlide(1)"></div>
+    <div class="hero-dot"        onclick="goToSlide(2)"></div>
+    <div class="hero-dot"        onclick="goToSlide(3)"></div>
   </div>
 </section>
 
-<!-- STATS BAR -->
+
+<!-- ══ STATS BAR ════════════════════════════════════════ -->
 <div class="stats-bar">
   <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Orders Completed</div></div>
   <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Custom Made</div></div>
-  <div class="stat"><div class="stat-num">3</div><div class="stat-label">Services Offered</div></div>
+  <div class="stat"><div class="stat-num">3</div>   <div class="stat-label">Services Offered</div></div>
   <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label">Customer Rating</div></div>
 </div>
 
-<!-- CATEGORIES -->
+
+<!-- ══ SERVICES / CATEGORIES ════════════════════════════ -->
 <section class="categories" id="about">
   <div class="section-header reveal">
     <div class="section-tag">What We Do</div>
     <h2 class="section-title">Our <em>Services</em></h2>
     <p class="section-sub">Three machines, infinite possibilities — all under one roof in Sri Lanka.</p>
   </div>
+
   <div class="cat-grid reveal">
 
-    <!-- Laser Engraving card -->
+    <!-- Laser Engraving — video background -->
     <div class="cat-card" onclick="scrollToShop('laser')">
-     
-      <!-- VIDEO BACKGROUND — replace laser1.mp4 with your actual video file -->
-  <video autoplay muted loop playsinline
-    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.6;">
-    <source src="images/lasertablecut.mp4" type="video/mp4">
-  </video>
-      
+      <video autoplay muted loop playsinline
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.6;">
+        <source src="images/lasertablecut.mp4" type="video/mp4">
+      </video>
       <div class="cat-overlay"></div>
       <div class="cat-content">
-        <div class="cat-icon">🔥</div>
+        <div class="cat-icon"></div>
         <div class="cat-name">Laser Engraving</div>
         <div class="cat-desc">Photos, logos, and custom designs burned into wood, acrylic & more — with stunning detail and precision.</div>
         <div class="cat-count">Wooden Photos · Key Tags · Signs</div>
       </div>
     </div>
 
-    <!-- 3D Printing card — clicking opens the calculator -->
+    <!-- 3D Printing — opens calculator -->
     <div class="cat-card" onclick="window.location.href='3d-calculator.html'">
+      <img src="images/3dexample.jpeg" autoplay muted loop playsinline
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.6;" />
+    </img>
       <div class="cat-bg">🖨️</div>
       <div class="cat-overlay"></div>
       <div class="cat-content">
-        <div class="cat-icon">🖨️</div>
+        <div class="cat-icon"></div>
         <div class="cat-name">3D Printing</div>
-        <div class="cat-desc">Custom 3D printed products from PLA — phone covers, frames, brackets, prototypes and more.</div>
+        <div class="cat-desc">Custom 3D printed products from PLA,ABS,TPU,PETG — phone covers, frames, brackets, prototypes and more.</div>
         <div class="cat-count">Phone Covers · Frames · Custom Parts</div>
-        <!-- Calculator button — stops the card click so only the button navigates -->
         <a href="3d-calculator.html" class="cat-calc-btn" onclick="event.stopPropagation()">🖨️ Get Instant Quote →</a>
       </div>
     </div>
 
-    <!-- Custom Orders card -->
+    <!-- Custom Orders -->
     <div class="cat-card" onclick="scrollToShop('custom')">
+      <img src="images/uniqueidea.png" 
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.6;" />
+    </img>
       <div class="cat-bg">✨</div>
       <div class="cat-overlay"></div>
       <div class="cat-content">
-        <div class="cat-icon">✨</div>
+        <div class="cat-icon"></div>
         <div class="cat-name">Custom Orders</div>
         <div class="cat-desc">Got a unique idea? Upload your design and we'll bring it to life, exactly as you imagined.</div>
         <div class="cat-count">Business Items · Gifts · Signage</div>
@@ -139,7 +180,8 @@
   </div>
 </section>
 
-<!-- SHOP -->
+
+<!-- ══ SHOP ══════════════════════════════════════════════ -->
 <section class="shop" id="shop">
   <div class="section-header reveal">
     <div class="section-tag">Ready to Order</div>
@@ -147,19 +189,22 @@
     <p class="section-sub">Browse our ready-made and custom-made products. Add to cart or place a custom order.</p>
   </div>
   <div class="shop-filters reveal">
-    <button class="filter-btn active" onclick="filterProducts('all',this)">All Products</button>
-    <button class="filter-btn" onclick="filterProducts('laser',this)">🔥 Laser Engraved</button>
-    <button class="filter-btn" onclick="filterProducts('3d',this)">🖨️ 3D Printed</button>
-    <button class="filter-btn" onclick="filterProducts('gift',this)">🎁 Gifts</button>
-    <button class="filter-btn" onclick="filterProducts('business',this)">🏢 Business</button>
-    <button class="filter-btn" onclick="filterProducts('custom',this)">✨ Custom</button>
+    <button class="filter-btn active" onclick="filterProducts('all',     this)">All Products</button>
+    <button class="filter-btn"        onclick="filterProducts('laser',   this)">🔥 Laser Engraved</button>
+    <button class="filter-btn"        onclick="filterProducts('3d',      this)">🖨️ 3D Printed</button>
+    <button class="filter-btn"        onclick="filterProducts('gift',    this)">🎁 Gifts</button>
+    <button class="filter-btn"        onclick="filterProducts('business',this)">🏢 Business</button>
+    <button class="filter-btn"        onclick="filterProducts('custom',  this)">✨ Custom</button>
   </div>
+  <!-- Products injected by js/products.js → renderProducts() -->
   <div class="products-grid reveal" id="productsGrid"></div>
 </section>
 
-<!-- CUSTOM ORDER -->
+
+<!-- ══ CUSTOM ORDER ═══════════════════════════════════════ -->
 <section class="custom-order" id="custom">
   <div class="custom-layout">
+
     <div class="custom-info reveal">
       <div class="section-tag">Place Your Vision</div>
       <h2 class="section-title">Custom <em>Orders</em></h2>
@@ -183,6 +228,7 @@
         </div>
       </div>
     </div>
+
     <div class="reveal">
       <form class="order-form" id="customOrderForm" onsubmit="submitCustomOrder(event)">
         <div class="form-title">Request a Custom Order</div>
@@ -209,7 +255,7 @@
               <option value="laser-engraving">🔥 Laser Engraving</option>
               <option value="laser-cutting">✂️ Laser Cutting</option>
               <option value="3d-printing">🖨️ 3D Printing</option>
-              <option value="mixed">✨ Mixed / Not Sure</option>
+             
             </select>
           </div>
           <div class="form-group">
@@ -244,10 +290,14 @@
         <button type="submit" class="form-submit">✉️ Send Custom Order Request</button>
       </form>
     </div>
+
   </div>
 </section>
 
-<!-- GALLERY -->
+
+<!-- ══ GALLERY ════════════════════════════════════════════
+     Replace emoji with: <img src="images/photo.jpg" style="width:100%;height:100%;object-fit:cover;" />
+════════════════════════════════════════════════════════ -->
 <section class="gallery" id="gallery">
   <div class="section-header reveal">
     <div class="section-tag">Our Work</div>
@@ -255,22 +305,33 @@
     <p class="section-sub">Real products, real craftsmanship — see what we've built for our customers.</p>
   </div>
   <div class="gallery-grid reveal">
+
     <div class="gallery-item">
       <img src="images/work1.png" style="width:100%;height:100%;object-fit:cover;" />
-      <div class="gallery-item-label">3D printed model for a customer</div></div> 
-    
+      <div class="gallery-item-label">3D printed model for a customer</div>
+    </div>
+
     <div class="gallery-item">
-      <img src="images/work2.jpeg" style="width:100%;height:200%;object-fit:cover;" />
-      <div class="gallery-item-label">Laser engraved table numbers for a customer</div></div>
-    
-      <div class="gallery-item">
+      <img src="images/work2.jpeg" style="width:100%;height:100%;object-fit:cover;" />
+      <div class="gallery-item-label">Laser engraved table numbers</div>
+    </div>
+
+    <div class="gallery-item">
       <img src="images/work3.jpeg" style="width:100%;height:100%;object-fit:cover;" />
-      <div class="gallery-item-label"></div></div>
-  
+      <div class="gallery-item-label"></div>
+    </div>
+   
+     <div class="gallery-item">
+      <img src="images/mushroom.png" style="width:100%;height:100%;object-fit:cover;" />
+      <div class="gallery-item-label">Mushroom table lamp</div>
+    </div>
+
+
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
+
+<!-- ══ TESTIMONIALS ══════════════════════════════════════ -->
 <section class="testimonials" id="contact">
   <div class="section-header reveal">
     <div class="section-tag">Customer Love</div>
@@ -281,16 +342,16 @@
       <div class="stars">★★★★★</div>
       <p class="testimonial-text">"Ordered custom table numbers for our restaurant and they were absolutely stunning. The laser engraving quality was far beyond what we expected."</p>
       <div class="testimonial-author">
-        <div class="author-avatar">K</div>
-        <div><div class="author-name">Kasun Perera</div><div class="author-role">Restaurant Owner, Colombo</div></div>
+        <div class="author-avatar">J</div>
+        <div><div class="author-name">Jananu De Silva</div><div class="author-role">Restaurant Owner, Colombo</div></div>
       </div>
     </div>
     <div class="testimonial">
       <div class="stars">★★★★★</div>
-      <p class="testimonial-text">"Got a wooden photo engraving as a Valentine's gift for my partner. She cried tears of joy. The detail was incredible — you could see every expression."</p>
+      <p class="testimonial-text">"Got a wooden photo engraving as a Valentine's gift for my partner.Nice work"</p>
       <div class="testimonial-author">
         <div class="author-avatar">A</div>
-        <div><div class="author-name">Ashan Fernando</div><div class="author-role">Customer, Kandy</div></div>
+        <div><div class="author-name">Ashan Fernando</div><div class="author-role">Customer, Colombo</div></div>
       </div>
     </div>
     <div class="testimonial">
@@ -298,13 +359,14 @@
       <p class="testimonial-text">"Had a custom 3D phone cover made and it fits perfectly. Super fast delivery and very responsive on WhatsApp. Highly recommend HRTE Creations!"</p>
       <div class="testimonial-author">
         <div class="author-avatar">N</div>
-        <div><div class="author-name">Nimasha Silva</div><div class="author-role">Customer, Galle</div></div>
+        <div><div class="author-name">Nimasha Silva</div><div class="author-role">Customer, Gampaha</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+
+<!-- ══ FOOTER ════════════════════════════════════════════ -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
@@ -347,7 +409,8 @@
   </div>
 </footer>
 
-<!-- CART SIDEBAR -->
+
+<!-- ══ CART SIDEBAR ══════════════════════════════════════ -->
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
 <div class="cart-sidebar" id="cartSidebar">
   <div class="cart-header">
@@ -374,7 +437,8 @@
   </div>
 </div>
 
-<!-- CHECKOUT MODAL -->
+
+<!-- ══ CHECKOUT MODAL ════════════════════════════════════ -->
 <div class="modal-overlay" id="checkoutModal">
   <div class="modal">
     <button class="modal-close-btn" onclick="closeCheckout()">✕</button>
@@ -422,9 +486,22 @@
   </div>
 </div>
 
+
+<!-- Toast & WhatsApp button -->
 <div class="toast" id="toast">✅ Added to cart!</div>
 <a class="float-wa" href="https://wa.me/94714754871" target="_blank" title="Chat on WhatsApp">💬</a>
 
-<script src="script.js"></script>
+
+<!-- ══ JS FILES — loaded last for best performance ══
+     products.js  → PRODUCTS array, renderProducts, filterProducts
+     cart.js      → addToCart, removeFromCart, changeQty, updateCartUI
+     checkout.js  → placeOrder, submitCustomOrder, payment — EDIT BACKEND_URL HERE
+     ui.js        → slideshow, toast, navbar, scroll reveal, initialise
+-->
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/checkout.js"></script>
+<script src="js/ui.js"></script>
+
 </body>
 </html>
